@@ -17,3 +17,12 @@ print(a)
 
 a -= 5
 print(a)
+
+# 동전교환
+money, c500, c100, c50, c10 = 0,0,0,0,0
+money = 7777
+
+c500 = money//500
+print(c500)
+money //= 500
+
