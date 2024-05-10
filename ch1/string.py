@@ -42,3 +42,26 @@ print(str1[0:-4])
 len(str1)
 
 # %%
+str2 = "20240510Sunny"
+date = str2[0:8]
+print(date)
+
+weather = str2[-5:]
+print(weather)
+
+year = date[:4]
+month = date[4:6]
+day = date[6:]
+print(year, month, day, sep="-")
+
+# %%
+id = "987653-1344234"
+# 주민등록번호 1 or 3 : 남자, 2 or 4 : 여자
+str = int(id[7])
+print(str)
+if str == 1 or str == 3:
+    print("Male")
+elif str == 2 or str == 4:
+    print("Female")
+
+# %%
