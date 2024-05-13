@@ -25,3 +25,7 @@ print(dict4["arr"])
 # dict1["addr"] : KeyError
 
 # %%
+# key가 없어도 error 발생 X
+dict1.get("addr")
+
+# %%
