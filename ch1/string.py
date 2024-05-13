@@ -65,3 +65,79 @@ elif str == 2 or str == 4:
     print("Female")
 
 # %%
+str1 = "파이썬프로그래밍"
+for s in str1:
+    print(s + "♥", end="")
+
+# %%
+# 문자열 함수
+# 1) count() : 문자열에 포함된 특정 문자열 개수
+str1 = "hobby"
+print("a 문자열에 포함된 b개수 %d" % str1.count("b"))
+
+
+# %%
+# 2) find() : 문자열의 위치
+str1 = "Python is the best choice"
+print("a 문자열에 b 위치 %d" % str1.find("b"))
+print("a 문자열에 b 위치 {}".format(str1.find("b")))
+print(f"a 문자열에 b 위치 {str1.find("b")}")
+
+# %%
+# 3) index() : 문자열 위치
+print("a 문자열에 b 위치 %d" % str1.index("b"))
+
+# %%
+# find() vs index()
+# 못찾으면 -1 반환
+print("a 문자열에 b 위치 %d" % str1.find("K"))
+
+# 못찾으면 error 발생(ValueError)
+# print("a 문자열에 b 위치 %d" % str1.index("K"))
+
+# %%
+# 4) startswith / endswith
+str2 = "Python Is Easy Programming"
+print(str2.startswith("P"))
+print(str2.endswith("P"))
+
+# %%
+# 5) join()
+print(",".join("abcdefg"))
+# list, tuple 문자열로 변경할때 주로 사용
+list1 = ["a","b","c","d","e"]
+print("".join(list1))
+
+# %%
+# 6) upper / lower / swapcase / title : 대소문자 변환
+a = "abcde"
+print("소문자 => 대문자 ", a.upper())
+
+a = "ABCDE"
+print("대문자 => 소문자 ", a.lower())
+
+a = "Python is Easy"
+print("대문자 소문자 상호 변환 ", a.swapcase())
+
+a = "python is easy"
+print("단어의 제일 앞 글자만 대문자 변환 ", a.title())
+
+# %%
+# python 대소문자 구별 함
+"abc" == "ABC"
+
+# %%
+# 7) lstrip / rstrip / strip : 공백제거
+a = "          hi"
+print(a)
+print(a.lstrip())
+
+a = "hi                "
+print(a)
+print(a.rstrip())
+
+a = "               hi                "
+print(a)
+print(a.strip())
+
+# %%
