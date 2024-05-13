@@ -141,3 +141,57 @@ print(a)
 print(a.strip())
 
 # %%
+# 8) replace() : 문자열 변경
+a = "Life is too short"
+a.replace("Life","Your leg")
+
+# %%
+# 9) split() : 문자열 나누기
+print(a.split()) # 공백 기준으로 나누기
+
+b = "a:b:c:d"
+print(b.split(":"))
+
+# %%
+# 10) splitlines : 엔터를 기준으로 나눔
+c = "하나\n둘\n셋"
+print(c.splitlines())
+print(c.split("\n"))
+
+# %%
+# 11) is~ : True, False로 결과가 나옴(문자열 구성 파악)
+print("1234".isdigit())
+print("abcd".isalpha())
+print("abc123".isalnum())
+print("abcd".islower())
+print("ABCD".isupper())
+print("    ".isspace())
+
+# %%
+name = "KennRY"
+print(name.swapcase())
+
+# %%
+# 20240513
+date = input("년월일 입력 : ")
+year = str(int(date[:4]) + 10)
+month = date[4:6]
+day = date[6:]
+print(year+"/"+month+"/"+day)
+
+# %%
+# http://naver.com
+# http://제외 : naver.com
+# 처음에 나오는 . 이후 부분 제외 : naver
+# 남은 글자 중 처음 세자리 + 글자개수 + 글자내 'e' 문자개수 + '!' 로 구성
+# : nav51!
+str1 = "http://naver.com"
+str1 = str1.replace("http://","")
+print(str1)
+print(str1.split("."))
+str1 = str1.split(".")[0]
+print(str1)
+str1 = str1[:3] + str(len(str1)) + str(str1.count("e")) + "!"
+print(str1)
+
+# %%
