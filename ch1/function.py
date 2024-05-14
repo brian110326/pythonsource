@@ -54,4 +54,46 @@ def add_many(*args):
 print(add_many(1, 2, 3))
 print(add_many(1, 2, 3, 4, 5, 6, 7, 8, 9))
 
+
+# %%
+# 가변 parameter와 일반 parameter를 같이 쓸때 가변 parameter를 맨 뒤에 선언
+def add_many(choice, *args):
+    if choice == "add":
+        result = 0
+        for i in args:
+            result += i
+
+    elif choice == "mul":
+        result = 1
+        for i in args:
+            result *= i
+
+    return result
+
+
+print(add_many("add", 1, 2, 3))
+print(add_many("mul", 1, 2, 3, 4, 5, 6, 7))
+
+
+# %%
+# keyword parameter : kwargs
+# : 입력값을 모아서 dictionary로 만들어줌
+def print_kwargs(**kwargs):
+    print(kwargs)
+
+
+print_kwargs(name="foo", age=3)
+print_kwargs(name="foo", age=3, addr="seoul")
+
+
+# %%
+# 일반, 가변, 키워드 다 섞이는 경우
+def print_kwargs(arg1, arg2, *args, **kwargs):
+    print(arg1, arg2, args, kwargs)
+
+
+print_kwargs(1, 2)
+print_kwargs(1, 2, "park", "kim")
+print_kwargs(1, 2, "park", "kim", age=25, name="choi")
+
 # %%
