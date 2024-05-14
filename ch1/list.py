@@ -209,3 +209,27 @@ print(avg)
 sum(a_class)
 
 # %%
+# list comprehension
+numbers = []
+# 요소 추가
+for i in range(1, 101):
+    numbers.append(i)
+print(numbers)
+
+# %%
+numbers = list(range(1, 101))
+print(numbers)
+
+# %%
+numbers = [x for x in range(1, 101)]
+print(numbers)
+
+# %%
+a = [1, 2, 3, 4]
+# a list요소에 3을 곱한 후 결과 return
+result = []
+for i in a:
+    result.append(i * 3)
+print(result)
+
+# %%
