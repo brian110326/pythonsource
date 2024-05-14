@@ -96,4 +96,114 @@ print_kwargs(1, 2)
 print_kwargs(1, 2, "park", "kim")
 print_kwargs(1, 2, "park", "kim", age=25, name="choi")
 
+
+# %%
+# 함수의 return값 : 여러개일 경우 묶어서 tuple로 return
+def add_and_mul(a, b):
+    return a + b, a * b
+
+
+print(add_and_mul(3, 4))
+
+hap, mul = add_and_mul(5, 6)
+print(hap, mul)
+
+
+# %%
+def func_mul(x):
+    y1 = x * 100
+    y2 = x * 200
+    y3 = x * 300
+    return [y1, y2, y3]
+
+
+print(func_mul(100))
+
+
+# %%
+def say_nick(nick):
+    if nick == "바보":
+        return
+    print(f"나의 별명은 {nick}입니다")
+
+
+say_nick("바보")
+say_nick("a")
+
+
+# %%
+def four_rules(a, b, op):
+    if op == "+":
+        result = a + b
+    elif op == "-":
+        result = a - b
+    elif op == "*":
+        result = a * b
+    elif op == "/":
+        result = a / b
+    return result
+
+
+num1 = int(input("숫자1 입력: "))
+num2 = int(input("숫자2 입력: "))
+op = input("연산자 입력 : ")
+print(four_rules(num1, num2, op))
+
+
+# %%
+a = 1
+
+
+def vartest(a):
+    a = a + 1
+
+
+vartest(a)
+print(a)
+
+# %%
+a = 1
+
+
+def vartest(a):
+    a = a + 1
+    return a
+
+
+a = vartest(a)
+print(a)
+
+# %%
+a = 1
+
+
+def vartest():
+    global a
+    a = a + 1
+    return a
+
+
+vartest()
+print(a)
+
+
+# %%
+# 1~100 소수에 해당하는 숫자
+# 2,3,5,7,11,13...
+primes = []
+
+
+def isPrime(x):
+    cnt = 0
+    for i in range(1, x + 1):
+        if x % i == 0:
+            cnt += 1
+    if cnt == 2:
+        primes.append(x)
+
+
+for j in range(1, 101):
+    isPrime(j)
+print(primes)
+
 # %%
