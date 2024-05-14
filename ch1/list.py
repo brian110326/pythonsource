@@ -278,7 +278,12 @@ print(result)
 result1 = [i * 2 for i in range(1, 5)]
 print(result1)
 
-result2 = [i * i for i in range(5)]
+result2 = [i**2 for i in range(5)]
 print(result2)
+
+# %%
+# [1,2,3]
+# [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
+print([[x, x + 1, x + 2] for x in [1, 2, 3]])
 
 # %%
