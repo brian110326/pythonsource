@@ -287,3 +287,40 @@ print(result2)
 print([[x, x + 1, x + 2] for x in [1, 2, 3]])
 
 # %%
+parking_lot = []
+top, car_name = 0, "A"
+while True:
+    no = int(input("[1] 자동차 넣기 | [2] 자동차 빼기 | [3] 종료 : "))
+
+    if no <= 3:
+        if no == 1:
+            if top >= 5:
+                print("주차장 꽉 찼음")
+            else:
+                parking_lot.append(car_name)
+                print(f"{car_name} 자동차 들어감. 주차장 상태 ==> {parking_lot}")
+
+                top += 1
+                car_name = chr(ord(car_name) + 1)
+        elif no == 2:
+            if top > 0:
+                outCar = parking_lot.pop()
+                print(f"{outCar} 자동차 나감. 주차장 상태 ==> {parking_lot}")
+
+                top -= 1
+                car_name = chr(ord(car_name) - 1)
+            else:
+                print("빠져나갈 자동차가 없음")
+
+        else:
+            print("프로그램 종료")
+            break
+    else:
+        print("번호를 확인해주세요")
+
+# %%
+# ord() : 특정 문자열에 대한 유니코드 값 반환
+# chr() : 유니코드 값 특정 문자열로 반환
+print(ord("A"))
+print(chr(65))
+# %%
