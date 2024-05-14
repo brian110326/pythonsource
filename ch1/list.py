@@ -323,4 +323,15 @@ while True:
 # chr() : 유니코드 값 특정 문자열로 반환
 print(ord("A"))
 print(chr(65))
+
+# %%
+# enumerate() : list, tuple, 문자열 값을 입력받아 인덱스 값을 포함하는 객체로 만들어 줌
+
+list1 = ["body", "foo", "bar"]
+for x in enumerate(list1):
+    print(x)
+
+for idx, value in enumerate(list1, start=1):
+    print(idx, value)
+
 # %%
