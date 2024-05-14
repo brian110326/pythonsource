@@ -233,3 +233,52 @@ for i in a:
 print(result)
 
 # %%
+result2 = [i * 3 for i in a]
+print(result2)
+
+# %%
+b = ["갑", "을", "병", "정"]
+# b list에서 정 요소를 제외하고 새로운 리스트
+result = []
+for i in b:
+    if i != "정":
+        result.append(i)
+print(result)
+
+# %%
+result2 = [x for x in b if x != "정"]
+print(result2)
+
+# %%
+a = [1, 2, 3, 4]
+# 짝수에만 3을 곱하기
+result = [x * 3 for x in a if x % 2 == 0]
+print(result)
+
+# %%
+# 1~100 숫자 중에서 홀수만 담아서 새로운 리스트로 생성
+result = [i for i in range(1, 101) if i % 2 != 0]
+print(result)
+
+# %%
+list1 = ["nice", "study", "python", "anaconda", "!"]
+# 5글자 이상의 요소만
+result = [str1 for str1 in list1 if len(str1) >= 5]
+print(result)
+
+# %%
+list2 = ["A", "b", "c", "D", "e", "F", "G", "h"]
+# 소문자만 담아서
+result = [ch for ch in list2 if ch == ch.lower()]
+print(result)
+
+# %%
+# [1,2,3,4] => [2,4,6,8]
+# [0,1,2,3,4] => [0,1,4,9,16]
+result1 = [i * 2 for i in range(1, 5)]
+print(result1)
+
+result2 = [i * i for i in range(5)]
+print(result2)
+
+# %%
