@@ -10,6 +10,8 @@ def write_excel_template(filename, sheetname, listdata):
 
     ws.title = sheetname
 
+    ws.column_dimensions["A"].width = 100
+
     for row in listdata:
         ws.append(row)
 

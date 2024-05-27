@@ -14,7 +14,8 @@ lists = list()
 with requests.Session() as s:
     for page in range(5):
         url = "https://www.clien.net/service/board/lecture?&od=T31&category=0&po="
-        r = s.get(url + str(page), headers=headers)
+        url += str(page)
+        r = s.get(url, headers=headers)
         soup = BeautifulSoup(r.text, "lxml")
 
         titles = soup.select("div.list_title > a > span.subject_fixed")
