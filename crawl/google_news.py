@@ -26,7 +26,19 @@ with requests.Session() as s:
         else:
             report_date = ""
             report_time = ""
+        print(report_date, report_time)
 
     comps = soup.find_all("div", class_="vr1PYe")
     for comp in comps:
         print(comp.string)
+
+# news = []
+# news.append(
+#     {
+#         "title": title,
+#         "href": href,
+#         "writer": comp,
+#         "report_date": report_date,
+#         "report_time": report_time,
+#     }
+# )
