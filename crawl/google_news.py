@@ -1,9 +1,11 @@
 # 파이썬 뉴스기사 크롤링
 from bs4 import BeautifulSoup
 import requests
+from urllib.error import HTTPError
 
 url = "https://news.google.com/search?q=%ED%8C%8C%EC%9D%B4%EC%8D%AC&hl=ko&gl=KR&ceid=KR%3Ako"
 base_url = "https://news.google.com"
+
 
 with requests.Session() as s:
     r = s.get(url)
