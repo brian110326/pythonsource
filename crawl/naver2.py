@@ -3,6 +3,7 @@ import requests
 from urllib.error import HTTPError
 from openpyxl import Workbook
 from xlsx_write import write_excel_template
+import re
 
 wb = Workbook()
 ws = wb.active
@@ -35,7 +36,8 @@ for idx in range(10):
 
     for idx, item in enumerate(data["items"], 1):
         # print(idx, item["title"], item["link"])  # <b>아이폰</b>
-        ws.append([num, item["title"], item["link"]])
+        title = re.sub("<.*?>", "", item["title"])
+        ws.append([num, title, item["link"]])
         num += 1
 
 base_dir = "./crawl/file/"
