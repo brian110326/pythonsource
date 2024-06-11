@@ -68,7 +68,7 @@ def main():
     dict_data = {"ID": ids_list, "Comments": comments_list}
     df = pd.DataFrame(dict_data)
 
-    df.to_csv("./crawl/file/youtube.csv", index=False)
+    df.to_csv("./crawl/file/youtube.csv", index=False, encoding="utf-8-sig")
 
     time.sleep(5)
 
