@@ -1,7 +1,7 @@
 from django.db import models
 
 
-# 테이블과 동일한 모델 정의(클래스)
+# Create your models here.
 class Todo(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField()

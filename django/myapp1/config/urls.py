@@ -20,6 +20,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # todo로 요청되는 경로는 todo app의 urls.py가 담당
     path("todo/", include("todo.urls")),
 ]

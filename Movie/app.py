@@ -67,3 +67,5 @@ if st.button("Recommend"):
                 col.image(images[idx])
                 col.write(titles[idx])
                 idx += 1
+
+# 터미널에서 streamlit run Movie/app.py 입력
