@@ -10,3 +10,6 @@ class Photo(models.Model):
     # TextField() => textarea 태그로 받기 위해서
     description = models.TextField()
     price = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.title
