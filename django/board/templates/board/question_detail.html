@@ -150,6 +150,7 @@
       <!-- csrf token-->
       {% csrf_token %}
       <!-- 오류 표시 영역-->
+      {% include "form_errors.html" %}
       <div class="form-group mb-3">
         <textarea name="content" id="content" rows="10" class="form-control"></textarea>
       </div>
