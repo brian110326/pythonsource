@@ -144,7 +144,7 @@
     <!-- 답변 한 개 영역 종료-->
     {% endfor %}
     <div>
-      <a href="" class="btn btn-sm btn-primary">목록으로</a>
+      <a href="{% url "board:question_list" %}" class="btn btn-sm btn-primary">목록으로</a>
     </div>
     <form action="{% url "board:answer_create" qid=question.id %}" method="post" class="my-3">
       <!-- csrf token-->

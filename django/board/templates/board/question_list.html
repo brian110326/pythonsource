@@ -55,9 +55,12 @@
                   <a href="{% url "board:question_detail" qid=question.id %}" class="text-decoration-none text-dark">
                     <!--질문 제목-->
                     {{question.subject}}
-                    <span class="text-danger small mx-2">
-                      <!-- 질문에 달린 답변의 개수 표시 -->
-                    </span>
+                    {% if question.answer_set.count > 0 %}
+                      <span class="text-danger small mx-2">
+                        <!-- 질문에 달린 답변의 개수 표시 -->
+                        {{question.answer_set.count}}
+                      </span>
+                    {% endif %}
                   </a>
                 </td>
                 <td>
