@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-1y)d$s0uv(k26gz)7u^ou4zf5mp^ju=#t+!-oyy3t&#zahl)xf"
+SECRET_KEY = "django-insecure-pcxf+59+a)64=@r3hh&0977@o&sr)@jp^rfw+4ajtx+f=kusc9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -119,13 +119,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+# BASE_DIR => django/board
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# 로그인 성공 시 이동할 URL 설정
+
+# 로그인 성공 시 이동할 URL
 LOGIN_REDIRECT_URL = "/"
-# 로그아웃 성공 시 이동할 URL 설정
+# 로그아웃 성공 시 이동할 URL
 LOGOUT_REDIRECT_URL = "/"
