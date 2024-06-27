@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-obo=iy1e2c*4qfkmermktl(c+#hccdod&measu4v+k+9r7zn4m"
+SECRET_KEY = "django-insecure-d=pkvj*7+wn36g6=)-o$j=_z&j-_lv+!r$)@_6z&z2xbi*21b%"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -53,11 +53,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# 공통으로 사용되는 templates는 django/board/templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # 공통으로 사용되는 templates는 django/board/templates 알려주기
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -120,10 +118,26 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-# BASE_DIR => django/board
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# 로그인 성공 시 이동할 URL
+LOGIN_REDIRECT_URL = "/"
+# 로그아웃 성공 시 이동할 URL
+LOGOUT_REDIRECT_URL = "/"
+
+
+# 내 네이버 이메일을 이용해 client 에게 이메일 전송하기
+DEFAULT_FROM_EMAIL = "pjky5@naver.com"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.naver.com"
+EMAIL_HOST_USER = "pjky5"
+EMAIL_HOST_PASSWORD = "thsdnjsvlf25"
+EMAIL_PORT = 465

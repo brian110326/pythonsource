@@ -1,14 +1,13 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
-
 from . import views
 
 app_name = "common"
 
 urlpatterns = [
     path("register/", views.register, name="register"),
-    # login 처리를 하는 뷰가 함수형 뷰가 아니라 클래스뷰임
+    # login 처리를 하는 뷰가 함수형뷰가 아니라 클래스뷰임
     # 클래스뷰를 함수형처럼 사용하려면 as_view() 사용
     path(
         "login/",
@@ -40,7 +39,7 @@ urlpatterns = [
     path(
         "password_reset/done/",
         auth_views.PasswordResetDoneView.as_view(
-            template_name="common/password_reset_done.html",
+            template_name="common/password_reset_done.html"
         ),
         name="password_reset_done",
     ),
@@ -54,9 +53,7 @@ urlpatterns = [
     ),
     path(
         "reset/done/",
-        auth_views.PasswordResetCompleteView.as_view(
-            template_name="common/password_reset_complete.html",
-        ),
+        auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
 ]

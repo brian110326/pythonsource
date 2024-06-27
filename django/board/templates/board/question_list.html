@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% comment %} extends, load같이 있을 때 항상 extends 먼저 {% endcomment %}
 {% load board_filter %}
 {% block content %}
   <div class="container">
@@ -22,7 +21,7 @@
     <div class="my-3">
       <table class="table">
         <thead>
-          <tr class="table-success">
+          <tr class="table-succ-ess">
             <th scope="col">번호</th>
             <th scope="col">추천</th>
             <th scope="col">제목</th>
@@ -35,14 +34,7 @@
             {% for question in question_list %}
               <tr>
                 <th scope="row">
-                  <!-- 번호
-                   question_list.paginator.count : 전체 게시물 수
-                   question_list.start_index : 페이지당 시작되는 게시물의 시작번호
-                  
-                   12개
-                   1 page : 12 ~ 3번 게시물 -> 12번이 start_index
-                    -->
-                   
+                  <!-- 번호 question_list.paginator.count : 전체게시물개수 question_list.start_index: 페이지당 시작되는 게시물의 시작 번호 12개 1 page : 12-3 2 page : 2 -->
                   {{question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1}}
                 </th>
                 <td>
@@ -51,10 +43,10 @@
                   </span>
                 </td>
                 <td>
-                  {% comment %} app_name을 줬기 때문 {% endcomment %}
                   <a href="{% url "board:question_detail" qid=question.id %}" class="text-decoration-none text-dark">
                     <!--질문 제목-->
                     {{question.subject}}
+
                     {% if question.answer_set.count > 0 %}
                       <span class="text-danger small mx-2">
                         <!-- 질문에 달린 답변의 개수 표시 -->
@@ -79,8 +71,6 @@
           {% endif %}
         </tbody>
       </table>
-
-
       <!-- 페이징 처리 -->
       <nav aria-label="">
         <ul class="pagination justify-content-center">
@@ -89,7 +79,7 @@
               <a class="page-link" href="?page={{question_list.previous_page_number}}">Previous</a>
             </li>
           {% endif %}
-          
+
           {% for page in question_list.paginator.page_range %}
             {% if page >= question_list.number|add:-5 and page <= question_list.number|add:5%}
               <li class="page-item {% if page == question_list.number %}active{% endif %}">
