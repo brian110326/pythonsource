@@ -39,3 +39,4 @@ def common_login(request):
 
 def common_logout(request):
     logout(request)
+    return redirect("index")
