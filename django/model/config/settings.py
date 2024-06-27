@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+    # 회원과 관련된 모든 기능
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -132,3 +133,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = "/"
 # 로그아웃 성공 시 이동할 URL
 LOGOUT_REDIRECT_URL = "/"
+
+# 이메일 전송
+DEFAULT_FROM_EMAIL = "brian110326@naver.com"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.naver.com"
+EMAIL_HOST_USER = "brian110326"
+EMAIL_HOST_PASSWORD = "Brian981103!"
+EMAIL_PORT = 465
