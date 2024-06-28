@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from .models import Question, Answer, Comment
 from .forms import QuestionForm, AnswerForm, CommentForm
 
@@ -37,7 +37,13 @@ def answer_create(request, qid):
             answer.question = question
             answer.author = request.user
             answer.save()
-            return redirect("board:question_detail", qid=qid)
+            # return redirect("board:question_detail", qid=qid)
+            # detail 페이지의 특정 위치 지정
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("board:question_detail", qid=qid), answer.id
+                )
+            )
     else:
         form = AnswerForm()
 
@@ -109,7 +115,14 @@ def answer_modify(request, aid):
             answer = form.save(commit=False)
             answer.modified_at = timezone.now()
             answer.save()
-            return redirect("board:question_detail", qid=answer.question.id)
+            # return redirect("board:question_detail", qid=answer.question.id)
+            # 수정 후 수정한 answer로 바로 가기
+            return redirect(
+                "{}#answer_{}".format(
+                    resolve_url("board:question_detail", qid=answer.question.id),
+                    answer.id,
+                )
+            )
 
     else:
         form = AnswerForm(instance=answer)
@@ -135,7 +148,13 @@ def comment_create_question(request, qid):
             comment.author = request.user
             comment.question = question
             comment.save()
-            return redirect("board:question_detail", qid)
+            # return redirect("board:question_detail", qid)
+            return redirect(
+                "{}#comment_{}".format(
+                    resolve_url("board:question_detail", qid),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm()
 
@@ -155,7 +174,13 @@ def comment_modify_question(request, cid):
             comment = form.save(commit=False)
             comment.modified_at = timezone.now()
             comment.save()
-            return redirect("board:question_detail", comment.question.id)
+            # return redirect("board:question_detail", comment.question.id)
+            return redirect(
+                "{}#comment_{}".format(
+                    resolve_url("board:question_detail", comment.question.id),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm(instance=comment)
 
@@ -179,7 +204,13 @@ def comment_create_answer(request, aid):
             comment.author = request.user
             comment.answer = answer
             comment.save()
-            return redirect("board:question_detail", aid)
+            # return redirect("board:question_detail", aid)
+            return redirect(
+                "{}#comment_{}".format(
+                    resolve_url("board:question_detail", aid),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm()
 
@@ -199,7 +230,13 @@ def comment_modify_answer(request, cid):
             comment = form.save(commit=False)
             comment.modified_at = timezone.now()
             comment.save()
-            return redirect("board:question_detail", comment.answer.question.id)
+            # return redirect("board:question_detail", comment.answer.question.id)
+            return redirect(
+                "{}#comment_{}".format(
+                    resolve_url("board:question_detail", comment.answer.question.id),
+                    comment.id,
+                )
+            )
     else:
         form = CommentForm(instance=comment)
 
@@ -223,6 +260,7 @@ def vote_question(request, qid):
         messages.error(request, "본인이 작성한 글은 추천이 불가능합니다")
     else:
         # 누가 작성했는지 정보 전달
+        # add 함수에서 한번 누르면 또 못 올라가게 자동으로 해줌
         question.voter.add(request.user)
 
     return redirect("board:question_detail", qid)
