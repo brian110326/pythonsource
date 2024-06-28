@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Question, Answer
-from .forms import QuestionForm, AnswerForm
+from .forms import QuestionForm, AnswerForm, CommentForm
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -125,7 +125,14 @@ def answer_delete(request, aid):
 
 @login_required(login_url="common:login")
 def comment_create_question(request, qid):
-    pass
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CommentForm()
+
+    return render(request, "board/comment_form.html", {"form": form})
 
 
 @login_required(login_url="common:login")
