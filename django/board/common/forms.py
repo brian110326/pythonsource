@@ -11,3 +11,4 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ["username", "email"]
+        labels = {"username": "아이디"}
