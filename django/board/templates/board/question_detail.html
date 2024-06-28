@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
   {% load static %}
-  <div class="container">
+
+  <div class="container mt-5">
+    {% if messages %}
+    <div class="alert alert-danger">
+      {% for msg in messages %}
+      {% comment %} error(messages.error메소드 사용했기 때문) {% endcomment %}
+        <strong>{{ msg.tags }}</strong>
+        <ul>
+          <li>{{msg.message}}</li>
+        </ul>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <h2 class="border-bottom py-2">
       <!-- 질문제목-->
       {{question.subject}}
@@ -11,9 +24,10 @@
       <div class="col-1">
         <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
           <!--추천수-->
+          {{question.voter.count}}
         </div>
         <div class="d-grid d-block">
-          <a href="" class="recommand btn btn-sm btn-secondary">추천</a>
+          <a href="{% url "board:vote_question" question.id %}" class="recommand btn btn-sm btn-secondary">추천</a>
         </div>
       </div>
       <div class="col-11">
@@ -88,9 +102,11 @@
       <a name=""></a>
       <div class="row my-3">
         <div class="col-1">
-          <div class="bg-light text-center p-3 border font-weight-bolder mb-1"></div>
+          <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
+            {{answer.voter.count}}
+          </div>
           <div class="d-grid d-block">
-            <a href="" class="recommand btn btn-sm btn-secondary">추천</a>
+            <a href="{% url "board:vote_answer" answer.id %}" class="recommand btn btn-sm btn-secondary">추천</a>
           </div>
         </div>
         <div class="col-11">

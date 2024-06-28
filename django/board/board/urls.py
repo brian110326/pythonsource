@@ -60,4 +60,10 @@ urlpatterns = [
         views.comment_delete_answer,
         name="comment_delete_answer",
     ),
+    # =-========================================================
+    # 추천
+    # http://localhost:8000/board/vote/question/qid
+    path("vote/question/<int:qid>/", views.vote_question, name="vote_question"),
+    # http://localhost:8000/board/vote/answer/aid
+    path("vote/answer/<int:aid>/", views.vote_answer, name="vote_answer"),
 ]
