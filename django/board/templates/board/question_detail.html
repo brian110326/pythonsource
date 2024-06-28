@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+  {% load static %}
   <div class="container">
     <h2 class="border-bottom py-2">
       <!-- 질문제목-->
@@ -46,8 +47,8 @@
             {% comment %} 글 작성자 == 로그인 사용자 {% endcomment %}
             {% if question.author == request.user %}
               <div class="my-3">
-                <a href="" class="btn btn-sm btn-outline-secondary">수정</a>
-                <a href="" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+                <a href="{% url "board:question_modify" question.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="{% url "board:question_delete" question.id %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
               </div>
             {% endif %}
             <!--// 질문 영역 종료-->
@@ -115,13 +116,14 @@
                   </div>
                 </div>
               </div>
-            </div>
-            {% if answer.author == request.user %}
+              {% if answer.author == request.user %}
               <div class="my-3">
-                <a href="" class="btn btn-sm btn-outline-secondary">수정</a>
-                <a href="" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+                <a href="{% url "board:answer_modify" answer.id %}" class="btn btn-sm btn-outline-secondary">수정</a>
+                <a href="{% url "board:answer_delete" answer.id %}" class="delete btn btn-sm btn-outline-secondary">삭제</a>
               </div>
             {% endif %}
+            </div>
+            
             <!--// 답변 종료-->
 
             <!-- 답변 댓글 영역-->
@@ -162,3 +164,7 @@
     </form>
   </div>
 {% endblock content %}
+
+{% block script %}
+  <script src="{% static "js/detail.js" %}"></script>
+{% endblock script %}

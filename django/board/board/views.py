@@ -4,6 +4,7 @@ from .forms import QuestionForm, AnswerForm
 
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 @login_required(login_url="common:login")
@@ -76,4 +77,47 @@ def question_detail(request, qid):
 
 @login_required(login_url="common:login")
 def question_modify(request, qid):
-    pass
+    question = get_object_or_404(Question, id=qid)
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.modified_at = timezone.now()
+            question.save()
+            return redirect("board:question_detail", qid=qid)
+    else:
+        form = QuestionForm(instance=question)
+
+    return render(request, "board/question_form.html", {"form": form})
+
+
+@login_required(login_url="common:login")
+def question_delete(request, qid):
+    question = get_object_or_404(Question, id=qid)
+    question.delete()
+    return redirect("board:question_list")
+
+
+@login_required(login_url="common:login")
+def answer_modify(request, aid):
+    answer = get_object_or_404(Answer, id=aid)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.modified_at = timezone.now()
+            answer.save()
+            return redirect("board:question_detail", qid=answer.question.id)
+
+    else:
+        form = AnswerForm(instance=answer)
+
+    return render(request, "board/answer_form.html", {"form": form})
+
+
+@login_required(login_url="common:login")
+def answer_delete(request, aid):
+    answer = get_object_or_404(Answer, id=aid)
+    answer.delete()
+    qid = answer.question.id
+    return redirect("board:question_detail", qid)
