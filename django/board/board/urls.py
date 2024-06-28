@@ -12,4 +12,6 @@ urlpatterns = [
     path("question/create/", views.question_create, name="question_create"),
     # http://localhost:8000/board/answer/create/2 (질문번호)
     path("answer/create/<int:qid>/", views.answer_create, name="answer_create"),
+    # http://localhost:8000/board/question/modify/3
+    path("question/modify/<int:qid>/", views.question_modify, name="question_modify"),
 ]

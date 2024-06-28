@@ -3,19 +3,25 @@ from .models import Question, Answer
 from .forms import QuestionForm, AnswerForm
 
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url="common:login")
 def question_create(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
-            form.save()
+            question = form.save(commit=False)
+            # author ==> 현재 login한 사람
+            question.author = request.user
+            question.save()
             return redirect("board:question_list")
     else:
         form = QuestionForm()
     return render(request, "board/question_form.html", {"form": form})
 
 
+@login_required(login_url="common:login")
 def answer_create(request, qid):
     """
     답변등록
@@ -26,6 +32,7 @@ def answer_create(request, qid):
         if form.is_valid():
             answer = form.save(commit=False)
             answer.question = question
+            answer.author = request.user
             answer.save()
             return redirect("board:question_detail", qid=qid)
     else:
@@ -65,3 +72,8 @@ def question_detail(request, qid):
     question = get_object_or_404(Question, id=qid)
     context = {"question": question}
     return render(request, "board/question_detail.html", context)
+
+
+@login_required(login_url="common:login")
+def question_modify(request, qid):
+    pass
