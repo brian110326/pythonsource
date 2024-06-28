@@ -13,6 +13,10 @@ class Question(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="작성일시")
     modified_at = models.DateTimeField(null=True, blank=True, verbose_name="수정일시")
 
+    # N:M 관계
+    # User 입장에서 접근할수있는 컬럼이 2개...(voter, author) => 혼동 방지용으로 정확한 명칭을 부여
+    voter = models.ManyToManyField(User, related_name="voter_question")
+
     def __str__(self):
         return self.subject
 
@@ -23,6 +27,7 @@ class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="작성일시")
     modified_at = models.DateTimeField(null=True, blank=True, verbose_name="수정일시")
+    voter = models.ManyToManyField(User, related_name="voter_answer")
 
     def __str__(self):
         return self.content
