@@ -26,3 +26,16 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.content
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(verbose_name="내용")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="작성일시")
+    modified_at = models.DateTimeField(null=True, blank=True, verbose_name="수정일시")
+
+    # 댓글이 q댓글인지 a댓글인지 비어있을수있기때문에(q댓글이면 a댓글이 아님)
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, null=True, blank=True
+    )
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True, blank=True)

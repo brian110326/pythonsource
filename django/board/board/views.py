@@ -121,3 +121,33 @@ def answer_delete(request, aid):
     answer.delete()
     qid = answer.question.id
     return redirect("board:question_detail", qid)
+
+
+@login_required(login_url="common:login")
+def comment_create_question(request, qid):
+    pass
+
+
+@login_required(login_url="common:login")
+def comment_modify_question(request, cid):
+    pass
+
+
+@login_required(login_url="common:login")
+def comment_delete_question(request, cid):
+    pass
+
+
+@login_required(login_url="common:login")
+def comment_create_answer(request, aid):
+    pass
+
+
+@login_required(login_url="common:login")
+def comment_modify_answer(request, cid):
+    pass
+
+
+@login_required(login_url="common:login")
+def comment_delete_answer(request, cid):
+    pass

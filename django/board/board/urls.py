@@ -20,4 +20,44 @@ urlpatterns = [
     path("answer/modify/<int:aid>/", views.answer_modify, name="answer_modify"),
     # http://localhost:8000/board/answer/delete/3/5
     path("answer/delete/<int:aid>/", views.answer_delete, name="answer_delete"),
+    # ---------------------------------------------------
+    # question 댓글
+    # http://localhost:8000/board/comment/create/question/1
+    path(
+        "comment/create/question/<int:qid>/",
+        views.comment_create_question,
+        name="comment_create_question",
+    ),
+    # http://localhost:8000/board/comment/modify/question/1
+    path(
+        "comment/modify/question/<int:cid>/",
+        views.comment_modify_question,
+        name="comment_modify_question",
+    ),
+    # http://localhost:8000/board/comment/delete/question/1
+    path(
+        "comment/delete/question/<int:cid>/",
+        views.comment_delete_question,
+        name="comment_delete_question",
+    ),
+    # ---------------------------------------------------
+    # answer 댓글
+    # http://localhost:8000/board/comment/create/answer/1
+    path(
+        "comment/create/answer/<int:aid>/",
+        views.comment_create_answer,
+        name="comment_create_answer",
+    ),
+    # http://localhost:8000/board/comment/modify/answer/1
+    path(
+        "comment/modify/answer/<int:cid>/",
+        views.comment_modify_answer,
+        name="comment_modify_answer",
+    ),
+    # http://localhost:8000/board/comment/delete/answer/1
+    path(
+        "comment/delete/answer/<int:cid>/",
+        views.comment_delete_answer,
+        name="comment_delete_answer",
+    ),
 ]
