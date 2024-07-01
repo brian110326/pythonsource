@@ -140,3 +140,7 @@ EMAIL_HOST = "smtp.naver.com"
 EMAIL_HOST_USER = "brian110326"
 EMAIL_HOST_PASSWORD = "Brian981103!"
 EMAIL_PORT = 465
+
+# 파일 업로드 설정
+MEDIA_ROOT = Path(BASE_DIR, "media")
+MEDIA_URL = "/media/"
