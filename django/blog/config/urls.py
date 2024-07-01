@@ -23,4 +23,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("blog/", include("blog.urls")),
     path("", RedirectView.as_view(url="/blog/"), name="index"),
+    path("common/", include("common.urls")),
 ]
