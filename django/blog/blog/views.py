@@ -28,3 +28,16 @@ def create(request):
         form = PostForm()
 
     return render(request, "blog/create.html", {"form": form})
+
+
+@login_required(login_url="common:login")
+def modify(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            pass
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/modify.html", {"form": form})
