@@ -133,11 +133,11 @@ LOGOUT_REDIRECT_URL = "/"
 
 
 # 내 네이버 이메일을 이용해 client 에게 이메일 전송하기
-DEFAULT_FROM_EMAIL = "pjky5@naver.com"
+DEFAULT_FROM_EMAIL = "brian110326@naver.com"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 EMAIL_HOST = "smtp.naver.com"
-EMAIL_HOST_USER = "pjky5"
-EMAIL_HOST_PASSWORD = "thsdnjsvlf25"
+EMAIL_HOST_USER = "brian110326@gmail.com"
+EMAIL_HOST_PASSWORD = "1111"
 EMAIL_PORT = 465
