@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
-from board.models import Question
+from board.models import Question, QuestionCount
 from django.core.paginator import Paginator
 from django.db.models import Q, Count  # or 조건으로 데이터 조회
+from tools.utils import get_client_ip
 
 
 def question_list(request):
@@ -48,6 +49,22 @@ def question_list(request):
 
 
 def question_detail(request, qid):
+    question = get_object_or_404(Question, id=qid)
+    # 클라이언트 ip 가져오기
+    ip = get_client_ip(request)
+    cnt = QuestionCount.objects.filter(ip=ip, question=question).count()
+
+    if cnt == 0:
+        # QuestionCount 객체 생성 후 저장
+        qc = QuestionCount(ip=ip, question=question)
+        qc.save()
+        # Question의 view_cnt +1 추가
+        if question.view_cnt > 0:
+            question.view_cnt += 1
+        else:
+            question.view_cnt = 1
+        question.save()
+
     # 현재 페이지 번호 가져오기
     page = request.GET.get("page", 1)
 
@@ -56,6 +73,6 @@ def question_detail(request, qid):
 
     # 정렬기준
     so = request.GET.get("so", "recent")
-    question = get_object_or_404(Question, id=qid)
+
     context = {"question": question, "page": page, "keyword": keyword, "so": so}
     return render(request, "board/question_detail.html", context)

@@ -17,6 +17,8 @@ class Question(models.Model):
     # User 입장에서 접근할수있는 컬럼이 2개...(voter, author) => 혼동 방지용으로 정확한 명칭을 부여
     voter = models.ManyToManyField(User, related_name="voter_question")
 
+    view_cnt = models.BigIntegerField(default=0)
+
     def __str__(self):
         return self.subject
 
@@ -44,3 +46,11 @@ class Comment(models.Model):
         Question, on_delete=models.CASCADE, null=True, blank=True
     )
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True, blank=True)
+
+
+class QuestionCount(models.Model):
+    ip = models.CharField(max_length=30)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __unique__(self):
+        return self.ip

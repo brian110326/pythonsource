@@ -28,6 +28,7 @@
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
             <th scope="col">작성일시</th>
+            <th scope="col">조회수</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,9 @@
                 <td>
                   <!-- 질문 작성일시 -->
                   {{question.created_at}}
+                </td>
+                <td>
+                  {{question.view_cnt}}
                 </td>
               </tr>
             {% endfor %}
