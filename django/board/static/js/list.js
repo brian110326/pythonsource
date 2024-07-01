@@ -27,3 +27,23 @@ document.querySelector(".pagination").addEventListener("click", (e) => {
   actionForm.querySelector("#page").value = e.target.getAttribute("href");
   actionForm.submit();
 });
+
+// 정렬기준 변화 일어나면 value 가져온 후
+// actionForm의 so value 변경
+document.querySelector(".so").addEventListener("change", (e) => {
+  so_value = e.target.value;
+  actionForm.querySelector("#so").value = so_value;
+  actionForm.submit();
+});
+
+// 제목 클릭 시 actionForm 보내기
+document.querySelector("tbody").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // href 값 가져오기
+
+  // actionForm action변경
+  actionForm.action = `/board/${e.target.getAttribute("href")}`;
+
+  actionForm.submit();
+});

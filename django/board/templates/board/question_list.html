@@ -6,9 +6,9 @@
     <div class="row mt-3 justify-content-between">
       <div class="col-md-3">
         <select class="form-select so">
-          <option value="recent">최신순</option>
-          <option value="recommend">추천순</option>
-          <option value="popular">인기순</option>
+          <option value="recent" {% if so == 'recent' %}selected='selected'{% endif %}>최신순</option>
+          <option value="recommend" {% if so == 'recommend' %}selected='selected'{% endif %}>추천순</option>
+          <option value="popular" {% if so == 'popular' %}selected='selected'{% endif %}>인기순</option>
         </select>
       </div>
       <div class="col-md-8">
@@ -45,7 +45,7 @@
                   </span>
                 </td>
                 <td>
-                  <a href="{% url "board:question_detail" qid=question.id %}" class="text-decoration-none text-dark">
+                  <a href="{{question.id}}" class="text-decoration-none text-dark">
                     <!--질문 제목-->
                     {{question.subject}}
 
@@ -107,6 +107,7 @@
     <form action="" method="get" id="actionForm">
       <input type="hidden" name="keyword" value="{{keyword | default_if_none:''}}" id="keyword"/>
       <input type="hidden" name="page" value="{{page}}" id="page"/>
+      <input type="hidden" name="so" value="{{so | default_if_none:''}}" id="so"/>
     </form>
   </div>
 {% endblock content %}
