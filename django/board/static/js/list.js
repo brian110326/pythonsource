@@ -1,22 +1,29 @@
-// 검색어 가져오기
-// 검색어 없을 시 alert창 메세지 띄워주기
+// 검색어(top_keyword) 가져오기
+// 없는 경우 alert()
 
-// 검색어 있는 경우 : actionForm keyword value에 삽입
-// page value => 1로 변경
+// 있는 경우
+// actionForm keyword value에 삽입
+//            page value 1로 변경
 const actionForm = document.querySelector("#actionForm");
+document.querySelector("#btn_search").addEventListener("click", () => {
+  const top_keyword = document.querySelector("#top_keyword");
 
-document.querySelector("#btn_search").addEventListener("click", (e) => {
-  const keyword = document.querySelector("#top_keyword");
-  if (!keyword.value) {
-    keyword.focus();
-    alert("검색어를 입력하세요");
+  if (top_keyword.value === "") {
+    alert("검색어를 입력해 주세요");
+    top_keyword.focus();
     return;
   }
 
-  actionForm.querySelector("#keyword").value = keyword.value;
+  actionForm.querySelector("#keyword").value = top_keyword.value;
+  actionForm.querySelector("#page").value = 1;
+  actionForm.submit();
+});
 
-  const page = actionForm.querySelector("#page");
-  page.value = 1;
-
-  // actionForm.submit();
+// 페이지 나누기 + 검색어
+// 페이지 나누기 클릭시 href에 있는 값 가져오기
+// actionForm의 page value변경
+document.querySelector(".pagination").addEventListener("click", (e) => {
+  e.preventDefault();
+  actionForm.querySelector("#page").value = e.target.getAttribute("href");
+  actionForm.submit();
 });

@@ -8,6 +8,8 @@ from django.utils import timezone
 
 from django.contrib import messages
 
+from django.db.models import Q  # or 조건으로 데이터 조회
+
 
 @login_required(login_url="common:login")
 def question_create(request):
@@ -67,13 +69,25 @@ def question_list(request):
     # 현재 페이지 번호 가져오기
     page = request.GET.get("page", 1)
 
+    # 검색어
+    keyword = request.GET.get("keyword", "")
+
     # question_list = Question.objects.all()
     question_list = Question.objects.order_by("-created_at")
+
+    if keyword:
+        question_list = question_list.filter(
+            Q(subject__icontains=keyword)
+            | Q(content__icontains=keyword)
+            # username : User객체의 아이디
+            | Q(author__username__icontains=keyword)
+            | Q(answer__author__username__icontains=keyword)
+        ).distinct()
 
     paginator = Paginator(question_list, 10)
     page_obj = paginator.get_page(page)
 
-    context = {"question_list": page_obj}
+    context = {"question_list": page_obj, "page": page, "keyword": keyword}
     return render(request, "board/question_list.html", context)
 
 
