@@ -7,4 +7,4 @@ class PostForm(forms.ModelForm):
         model = Post
 
         # fields = "__all__"
-        fields = ["title", "content", "image"]
+        fields = ["title", "content", "image", "tags"]

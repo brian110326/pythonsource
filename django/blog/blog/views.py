@@ -27,6 +27,9 @@ def create(request):
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+
+            # 태그 저장
+            form.save_m2m()
             return redirect("blog:list")
     else:
         form = PostForm()
@@ -54,3 +57,7 @@ def delete(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     post.delete()
     return redirect("blog:list")
+
+
+def comment_create(request, post_id):
+    pass

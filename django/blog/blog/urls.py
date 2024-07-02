@@ -10,4 +10,7 @@ urlpatterns = [
     path("post/create/", views.create, name="create"),
     path("post/modify/<int:post_id>/", views.modify, name="modify"),
     path("post/delete/<int:post_id>/", views.delete, name="delete"),
+    # ===========================================================
+    # 댓글
+    path("post/comment/<int:post_id>/", views.comment_create, name="comment_create"),
 ]
