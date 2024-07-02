@@ -7,5 +7,18 @@ document.querySelector("#like").addEventListener("click", (e) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
+
+      // 좋아요 수 : data.likes
+      // 좋아요 표시 여부 : data.is_liked
+
+      if (data.is_liked) {
+        document.querySelector(".like").classList.add("show");
+        document.querySelector(".dislike").classList.remove("show");
+      } else {
+        document.querySelector(".like").classList.remove("show");
+        document.querySelector(".dislike").classList.add("show");
+      }
+
+      document.querySelector(".like-total span").innerHTML = data.likes;
     });
 });
