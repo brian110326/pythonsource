@@ -13,4 +13,6 @@ urlpatterns = [
     # ===========================================================
     # 댓글
     path("post/comment/<int:post_id>/", views.comment_create, name="comment_create"),
+    # 좋아요
+    path("post/like/<int:post_id>/", views.post_like, name="post_like"),
 ]
