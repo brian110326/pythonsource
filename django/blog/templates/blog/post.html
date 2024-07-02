@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "css/post.css" %}">
+{% endblock css %}
     <article class="mb-4">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -41,12 +44,67 @@
                             </h3>
                         </div>
                     </div>
+
+                    {% include "like.html" %}
+
+                    {% comment %} taggit {% endcomment %}
+                    <div class="row mt-5">
+                        <div class="col-md-10">
+                            {% for tag in post.tags.all %}
+                                <span class="badge rounded-pill text-bg-dark">#{{tag.name}}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% comment %} 댓글 목록 처리 {% endcomment %}
+                    {% if post.comment_set.count > 0 %}
+                    <div class="row mt-5">
+                        <div class="col-md-10">
+                            <div class="card mb-5">
+                                <div class="card-header">
+                                    <i class="fa-regular fa-comments"></i>
+                                    Comments
+                                </div>
+                                {% comment %} 댓글 반복 영역 {% endcomment %}
+                                {% for comment in post.comment_set.all %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {% comment %} 댓글 내용 {% endcomment %}
+                                            {{comment.content}}
+                                        </h5>
+                                        <div class="card-text text-end fs-6 bg-light">
+                                            {% comment %} 댓글 작성자(댓글 작성 일시) {% endcomment %}
+                                            {{comment.user}}({{comment.created_at}})
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% comment %} 댓글 등록 {% endcomment %}
+                    {% if user.is_authenticated %}
+                    <div class="row mt-5">
+                        <div class="col-md-10">
+                            <form action="{% url "blog:comment_create" post.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea name="content" id="content" class="form-control" row="10"></textarea>
+                                </div>
+                                <div class="form-group d-grid">
+                                    <button type="submit" class="btn btn-secondary">댓글 등록</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </article>
 {% endblock content %}
-
-
-
+{% block script %}
+    <script src="{% static "js/post.js" %}"></script>
+{% endblock script %}
 

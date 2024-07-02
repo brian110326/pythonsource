@@ -71,11 +71,15 @@
         <hr class="my-4" />
         <!-- Pager-->
         <div class="d-flex justify-content-center mb-4">
-          <a class="btn btn-primary text-uppercase" href="#">← Previous Posts</a>
+          {% if post_list.has_previous %}
+            <a class="btn btn-primary text-uppercase" href="?page={{post_list.previous_page_number}}">← Previous Posts</a>
+          {% endif %}
 
-          <a class="btn btn-primary text-uppercase" href="#">1/5</a>
+          <a class="btn btn-primary text-uppercase" href="#">{{post_list.number}}/{{post_list.paginator.num_pages}}</a>
 
-          <a class="btn btn-primary text-uppercase" href="#">Next Posts →</a>
+          {% if post_list.has_next %}
+            <a class="btn btn-primary text-uppercase" href="?page={{post_list.next_page_number}}">Next Posts →</a>
+          {% endif %}
         </div>
         
       </div>
