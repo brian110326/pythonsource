@@ -42,6 +42,8 @@
                         </div>
                     </div>
 
+                    {% include "like.html" %}
+
                     {% comment %} taggit {% endcomment %}
                     <div class="row mt-5">
                         <div class="col-md-10">
@@ -52,6 +54,7 @@
                     </div>
 
                     {% comment %} 댓글 목록 처리 {% endcomment %}
+                    {% if post.comment_set.count > 0 %}
                     <div class="row mt-5">
                         <div class="col-md-10">
                             <div class="card mb-5">
@@ -60,23 +63,29 @@
                                     Comments
                                 </div>
                                 {% comment %} 댓글 반복 영역 {% endcomment %}
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {% comment %} 댓글 내용 {% endcomment %}
-                                    </h5>
-                                    <div class="card-text text-end fs-6 bg-light">
-                                        {% comment %} 댓글 작성자(댓글 작성 일시) {% endcomment %}
+                                {% for comment in post.comment_set.all %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {% comment %} 댓글 내용 {% endcomment %}
+                                            {{comment.content}}
+                                        </h5>
+                                        <div class="card-text text-end fs-6 bg-light">
+                                            {% comment %} 댓글 작성자(댓글 작성 일시) {% endcomment %}
+                                            {{comment.user}}({{comment.created_at}})
+                                        </div>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
-                    
+                    {% endif %}
 
                     {% comment %} 댓글 등록 {% endcomment %}
+                    {% if user.is_authenticated %}
                     <div class="row mt-5">
                         <div class="col-md-10">
-                            <form action="" method="post">
+                            <form action="{% url "blog:comment_create" post.id %}" method="post">
+                                {% csrf_token %}
                                 <div class="form-group">
                                     <textarea name="content" id="content" class="form-control" row="10"></textarea>
                                 </div>
@@ -86,7 +95,7 @@
                             </form>
                         </div>
                     </div>
-
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     tags = TaggableManager()
+    likes = models.ManyToManyField(User, related_name="likes", blank=True)
 
     # list 추출 시 처음부터 작성일자 내림차순으로 정렬
     class Meta:
