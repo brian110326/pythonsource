@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 # Create your models here.
@@ -10,6 +11,7 @@ class Post(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="image")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    tags = TaggableManager()
 
     # list 추출 시 처음부터 작성일자 내림차순으로 정렬
     class Meta:
