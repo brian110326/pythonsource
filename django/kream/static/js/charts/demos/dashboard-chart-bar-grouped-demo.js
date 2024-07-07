@@ -1,8 +1,42 @@
+const datas = document.querySelectorAll("#monthly_sales");
+
+const arrData = new Array();
+const addedMonth = new Set();
+
+datas.forEach((element) => {
+  const tradeYear = element.getAttribute("data-year");
+  if (tradeYear == "2024") {
+    const data = new Object();
+    const tradeMonth = element.getAttribute("data-month");
+
+    // monthly_sales는 동일하니 1개만 보여주기(중복 방지 위해 Set구조)
+    if (!addedMonth.has(tradeMonth)) {
+      data.month = tradeMonth;
+      data.monthlySales = element.value;
+      arrData.push(data);
+      addedMonth.add(tradeMonth);
+    }
+  }
+});
+
+arrData.sort(function (a, b) {
+  return a.month - b.month;
+});
+
+month_array = [];
+data_array = [];
+arrData.forEach((arr) => {
+  month_array.push(arr.month);
+  data_array.push(arr.monthlySales);
+});
+
+// 월이 같으면 하나만 보여주기
+
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {
   type: "line",
   data: {
-    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+    labels: month_array,
     datasets: [
       {
         label: "총판매가격",
@@ -11,7 +45,7 @@ var myBarChart = new Chart(ctx, {
         borderRadius: 4,
         maxBarThickness: 32,
         // monthly_sales
-        data: [4853, 12395, 22495, 29876, 44535, 54984, 54984, 54984, 54984, 54984, 54984, 54984],
+        data: data_array,
       },
       //   {
       //     label: "This Year",

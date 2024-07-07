@@ -315,12 +315,12 @@
                         <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">총 판매금액</div>
-                            <div class="display-5 fw-500">{{trade.total_sales}}원</div>
-                            
+                            <div class="display-5 fw-500">{{trade.total_sales}}원</div>                            
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">평균 판매금액</div>
                             <div class="display-5 fw-500">{{trade.average_sales}}원</div>
+                            
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">지난해 대비 판매 증가비율</div>
@@ -328,8 +328,8 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-12 col-xxl-10">
-                        <canvas id="dashboardBarChart"></canvas>
+                      <div class="col-12 col-xxl-10">                       
+                          <canvas id="dashboardBarChart"></canvas>                        
                       </div>
                     </div>
                   </div>
@@ -493,6 +493,12 @@
     <form action="{% url "common:logout" %}" method="post" id="logoutForm">
       {% csrf_token %}
     </form>
+
+    {% for t in all_trades %}
+      {% comment %} <input type="hidden" name="" value="{{t.trade_month}}" id="month"> {% endcomment %}
+      <input type="hidden" name="" data-year="{{t.trade_year}}" data-month="{{t.trade_month}}" value="{{t.monthly_sales}}" id="monthly_sales">
+      <input type="hidden" name="" data-year="{{t.trade_year}}" data-size="{{t.trade_size}}" value="{{t.size_sales}}" id="size_sales">
+    {% endfor %}
 
     <!-- Load Bootstrap JS bundle-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

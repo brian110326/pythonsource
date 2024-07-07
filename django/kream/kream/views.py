@@ -9,7 +9,9 @@ from django.http import JsonResponse
 def detail(request, pid):
     single_product = get_object_or_404(Product, id=pid)
     product_list = Product.objects.all()
-    product_trade = Trade.objects.filter(product=single_product)
+    trade = Trade.objects.filter(product=single_product)[0]
+
+    all_trades = Trade.objects.filter(product=single_product)
 
     return render(
         request,
@@ -17,6 +19,7 @@ def detail(request, pid):
         {
             "product_list": product_list,
             "single_product": single_product,
-            "trade": product_trade,
+            "trade": trade,
+            "all_trades": all_trades,
         },
     )

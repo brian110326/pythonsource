@@ -1,22 +1,41 @@
-// Demo Pie Chart
-// 
-// The style configurations in this demo are
-// intended to match the Material Design styling.
-// Use this demo chart as a starting point and for
-// reference when creating charts within an app.
-// 
-// Chart.js v3 is being used, which is currently
-// in beta. For the v3 docs, visit
-// https://www.chartjs.org/docs/master/
+const sizeDatas = document.querySelectorAll("#size_sales");
 
-var ctx = document.getElementById('myPieChart').getContext('2d');
+const arrSizeData = new Array();
+const addedSize = new Set();
+
+sizeDatas.forEach((element) => {
+  const tradeYear = element.getAttribute("data-year");
+  if (tradeYear == "2024") {
+    const data = new Object();
+    const tradeSize = element.getAttribute("data-size");
+
+    // sizeSales 동일하니 1개만 보여주기(중복 방지 위해 Set구조)
+    if (!addedSize.has(tradeSize)) {
+      data.size = tradeSize;
+      data.sizeSales = element.value;
+      arrSizeData.push(data);
+      addedSize.add(tradeSize);
+    }
+  }
+});
+
+size_array = [];
+data_array = [];
+arrSizeData.forEach((arr) => {
+  size_array.push(arr.size);
+  data_array.push(arr.sizeSales);
+});
+
+var ctx = document.getElementById("myPieChart").getContext("2d");
 var myPieChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: ['Alpha', 'Beta', 'Gamma', 'Delta'],
-        datasets: [{
-            data: [27.21, 15.58, 11.25, 8.32],
-            backgroundColor: [primaryColor, infoColor, secondaryColor, warningColor],
-        }],
-    },
+  type: "pie",
+  data: {
+    labels: size_array,
+    datasets: [
+      {
+        data: size_array,
+        backgroundColor: [primaryColor, infoColor, secondaryColor, warningColor],
+      },
+    ],
+  },
 });
