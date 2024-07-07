@@ -23,8 +23,8 @@ from django.conf import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("kream/", include("kream.urls")),
-    # path("", RedirectView.as_view(url="/kream/"), name="index"),
+    path("kream/", include("kream.urls")),
+    path("", RedirectView.as_view(url="/kream/"), name="index"),
     path("common/", include("common.urls")),
 ]
 
