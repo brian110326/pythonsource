@@ -10,6 +10,7 @@ class Product(models.Model):
     model_no = models.CharField(max_length=20)
     release_date = models.CharField(max_length=20)
     color = models.CharField(max_length=10)
+    original_price = models.IntegerField(default=0)
     img_url = models.CharField(max_length=200)
     product_detail_url = models.CharField(max_length=200)
 
