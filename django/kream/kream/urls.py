@@ -5,5 +5,5 @@ from . import views
 app_name = "kream"
 
 urlpatterns = [
-    path("detail/<int:pid>/", views.detail, name="detail"),
+    path("detail/<int:pid>/<int:year>/", views.detail, name="detail"),
 ]

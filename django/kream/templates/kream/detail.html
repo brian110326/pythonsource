@@ -187,19 +187,19 @@
                 <h1 class="display-4 mb-0">종합분석</h1>
                 <div class="text-muted">{{single_product.name_kor}}</div>
               </div>
-              <div class="col-12 col-md-auto">
+              <div class="col-12 col-md-auto" id="selectParent">
                 <div class="d-flex flex-column flex-sm-row gap-3">
-                  <mwc-select class="mw-50 mb-2 mb-md-0" outlined="outlined" label="View by">
-                    <mwc-list-item selected="selected" value="0">Order type</mwc-list-item>
-                    <mwc-list-item value="1">Segment</mwc-list-item>
-                    <mwc-list-item value="2">Customer</mwc-list-item>
-                  </mwc-select>
-                  <mwc-select class="mw-50" outlined="outlined" label="Sales from">
-                    <mwc-list-item value="0">Last 7 days</mwc-list-item>
-                    <mwc-list-item value="1">Last 30 days</mwc-list-item>
-                    <mwc-list-item value="2">Last month</mwc-list-item>
-                    <mwc-list-item selected="selected" value="3">Last year</mwc-list-item>
-                  </mwc-select>
+                  
+                    {% comment %} {% for trade in all_trades %}
+                      <mwc-list-item value="" id="mwc2" data-year="{{trade.trade_year}}" selected="selected"></mwc-list-item>
+                    {% endfor %} {% endcomment %}
+
+                    <select data-year="{{trade.trade_year}}" class="form-select" aria-label="Default select example" id="select">
+                      <option>년도 선택</option>
+                      {% for trade in all_trades  %}
+                        <option value="" data-year="{{trade.trade_year}}" selected="selected" id="option"></option>   
+                      {% endfor %}               
+                    </select>
                 </div>
               </div>
             </div>
@@ -347,33 +347,9 @@
                   <div class="card-header bg-primary text-white px-4">
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="me-4">
-                        <h2 class="card-title text-white mb-0">Segments</h2>
-                        <div class="card-subtitle">Revenue sources</div>
+                        <h2 class="card-title text-white mb-0">사이즈별 총 판매량</h2>                       
                       </div>
                       <div class="dropdown">
-                        <button class="btn btn-lg btn-text-light btn-icon me-n2 dropdown-toggle" id="segmentsDropdownButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="material-icons">more_vert</i>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="segmentsDropdownButton">
-                          <li>
-                            <a class="dropdown-item" href="#!">Action</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#!">Another action</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#!">Something else here</a>
-                          </li>
-                          <li>
-                            <hr class="dropdown-divider"/>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#!">Separated link</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#!">Separated link</a>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </div>
@@ -462,7 +438,7 @@
                     {% for product in product_list %}
                       <tr>
                         <td>{{product.brand}}</td>
-                        <td><a href="{% url "kream:detail" product.id %}">{{product.name_kor}}</a></td>
+                        <td><a href="{% url "kream:detail" product.id trade.trade_year %}">{{product.name_kor}}</a></td>
                         <td>{{product.model_no}}</td>
                         <td>{{product.original_price}}</td>
                         <td><a href="{{product.product_detail_url}}">{{product.product_detail_url}}</a></td>
@@ -495,7 +471,6 @@
     </form>
 
     {% for t in all_trades %}
-      {% comment %} <input type="hidden" name="" value="{{t.trade_month}}" id="month"> {% endcomment %}
       <input type="hidden" name="" data-year="{{t.trade_year}}" data-month="{{t.trade_month}}" value="{{t.monthly_sales}}" id="monthly_sales">
       <input type="hidden" name="" data-year="{{t.trade_year}}" data-size="{{t.trade_size}}" value="{{t.size_sales}}" id="size_sales">
     {% endfor %}
@@ -517,6 +492,7 @@
 
     <script src="{% static "js/datatables/datatables-simple-demo.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
+    <script src="{% static "js/detail.js" %}"></script>
     {% block script %}{% endblock script %}
   </body>
   {% endblock content %}

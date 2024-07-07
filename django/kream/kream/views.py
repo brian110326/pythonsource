@@ -6,10 +6,12 @@ from django.http import JsonResponse
 
 
 # Create your views here.
-def detail(request, pid):
+def detail(request, pid, year):
     single_product = get_object_or_404(Product, id=pid)
     product_list = Product.objects.all()
-    trade = Trade.objects.filter(product=single_product)[0]
+
+    # 전체 판매금액과 평균금액은 동일
+    trade = Trade.objects.filter(product=single_product, trade_year=year)[0]
 
     all_trades = Trade.objects.filter(product=single_product)
 

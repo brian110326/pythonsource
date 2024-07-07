@@ -1,11 +1,19 @@
 const datas = document.querySelectorAll("#monthly_sales");
-
 const arrData = new Array();
 const addedMonth = new Set();
 
+const targetYear = null;
+
+select.addEventListener("change", (e) => {
+  const selectedOption = e.target.options[e.target.selectedIndex];
+
+  targetYear = selectedOption.value;
+  console.log(targetYear);
+});
+
 datas.forEach((element) => {
   const tradeYear = element.getAttribute("data-year");
-  if (tradeYear == "2024") {
+  if (tradeYear == targetYear) {
     const data = new Object();
     const tradeMonth = element.getAttribute("data-month");
 
@@ -29,8 +37,6 @@ arrData.forEach((arr) => {
   month_array.push(arr.month);
   data_array.push(arr.monthlySales);
 });
-
-// 월이 같으면 하나만 보여주기
 
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {

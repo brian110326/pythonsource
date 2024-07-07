@@ -33,8 +33,8 @@ var myPieChart = new Chart(ctx, {
     labels: size_array,
     datasets: [
       {
-        data: size_array,
-        backgroundColor: [primaryColor, infoColor, secondaryColor, warningColor],
+        data: data_array,
+        backgroundColor: [primaryColor, infoColor, secondaryColor, warningColor, "red", "orange", "yellow", "green", "blue", "purple"],
       },
     ],
   },
