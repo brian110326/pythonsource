@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  select.innerHTML = "<option selected>년도 선택</option>";
+  select.innerHTML = '<input type="hidden" name="">';
   addedYear.forEach((year) => {
     const option = document.createElement("option");
     option.value = year;
@@ -105,8 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   select.addEventListener("change", (e) => {
     const selectedOption = e.target.value;
+
     const pid = document.querySelector("#pid").value;
     const url = `http://127.0.0.1:8000/kream/detail/${pid}/${selectedOption}/`;
+
     window.location.href = url;
   });
 

@@ -11,7 +11,7 @@
         </button>
         <!-- Navbar brand-->
         <a class="navbar-brand me-auto" href="index.html">
-          <div class="text-uppercase font-monospace">Material Admin Pro</div>
+          <div class="">한정판 거래 온라인 플랫폼 상품 데이터 분석</div>
         </a>
         <!-- Navbar items-->
         <div class="d-flex align-items-center mx-3 me-lg-0">
@@ -187,6 +187,7 @@
                 <h1 class="display-4 mb-0">종합분석</h1>
                 <input type="hidden" name="" value="{{single_product.id}}" id="pid">
                 <div class="text-muted">{{single_product.name_kor}}</div>
+                
               </div>
               <div class="col-12 col-md-auto" id="selectParent">
                 <div class="d-flex flex-column flex-sm-row gap-3">
@@ -194,9 +195,11 @@
                     {% comment %} {% for trade in all_trades %}
                       <mwc-list-item value="" id="mwc2" data-year="{{trade.trade_year}}" selected="selected"></mwc-list-item>
                     {% endfor %} {% endcomment %}
-
-                    <select data-year="{{trade.trade_year}}" class="form-select" aria-label="Default select example" id="select">
-                      <option>년도 선택</option>
+                    <div>
+                      년도 선택
+                    </div>
+                    <select data-year="{{trade.trade_year}}" class="form-select" aria-label="Default select example" id="select" placeholder="년도선택">
+                      {% comment %} <option>년도 선택</option> {% endcomment %}
                       {% for trade in all_trades  %}
                         <option value="" data-year="{{trade.trade_year}}" selected="selected" id="option"></option>   
                       {% endfor %}               
@@ -316,16 +319,16 @@
                         <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">총 판매금액</div>
-                            <div class="display-5 fw-500">{{trade.total_sales}}원</div>                            
+                            <div class="display-5 fw-400">{{trade.total_sales}}원</div>                            
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">평균 판매금액</div>
-                            <div class="display-5 fw-500">{{trade.average_sales}}원</div>
+                            <div class="display-5 fw-400">{{trade.average_sales}}원</div>
                             
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">지난해 대비 판매 증가비율</div>
-                            <div class="display-5 fw-500 text-success">119%</div>
+                            <div class="display-5 fw-400 text-success">119%</div>
                           </div>
                         </div>
                       </div>
@@ -376,16 +379,15 @@
                 <div class="card card-raised h-100">
                   <div class="card-body p-4">
                     <div class="d-flex justify-content-between">
+                      <img src="https://play-lh.googleusercontent.com/Gh73JjkOE27zN6F8l4tWqlzgpHMEyEZJLOOg8-RQfYtPBAwsSCWNcqvdhgTaqGSOLA" alt="..." style="height: 6rem; margin-right: 1rem;"/>
                       <div class="me-4">
-                        <h2 class="card-title mb-0">Privacy Suggestions</h2>
-                        <p class="card-text">Take our privacy checkup to choose which settings are right for you.</p>
-                      </div>
-                      
-                      <img src="{% static "assets/img/illustrations/security.svg" %}" alt="..." style="height: 6rem"/>
+                        <h2 class="card-title mb-0">Kream</h2>
+                        <p class="card-text">크림 — 한정판 스니커즈부터 명품, 가전, 테크, 음반, 트레이딩 카드 까지! KREAM에서 바로 구매! 100% 정품 kream. 한정판을 구매하는 가장 안전한 방법! 웰컴드로우. 브랜드관 입점</p>
+                      </div>  
                     </div>
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray px-4">
-                    <a class="stretched-link text-decoration-none" href="#!">Review suggestions (4)</a>
+                    <a class="stretched-link text-decoration-none" href="https://kream.co.kr/search">https://kream.co.kr/search</a>
                   </div>
                 </div>
               </div>
@@ -394,20 +396,15 @@
                 <div class="card card-raised h-100">
                   <div class="card-body p-4">
                     <div class="d-flex justify-content-between">
+                      <img src="https://play-lh.googleusercontent.com/cFdSDY1ilmENPoGhAYbNbx5sfmvDBz9MOP5-hTywWFfvp_y7k9ETj9Y3XwwOuLDTNIgU=s48-rw" alt="..." style="height: 6rem; margin-right: 1rem;"/>
                       <div class="me-4">
-                        <h2 class="card-title mb-0">Account Storage</h2>
-                        <p class="card-text">Your account storage is shared across all devices.</p>
-                        <div class="progress mb-2" style="height: 0.25rem">
-                          <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="30"></div>
-                        </div>
-                        <div class="card-text">10 GB of 30 GB used</div>
-                      </div>
-                      
-                      <img src="{% static "assets/img/illustrations/cloud.svg" %}" alt="..." style="height: 6rem"/>
+                        <h2 class="card-title mb-0">솔드아웃</h2>
+                        <p class="card-text">믿을 수 있는 한정판 플랫폼, 갖고 싶은 한정판 다 솔드아웃에서</p>
+                      </div>  
                     </div>
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray px-4">
-                    <a class="stretched-link text-decoration-none" href="#!">Manage storage</a>
+                    <a class="stretched-link text-decoration-none" href="https://www.soldout.co.kr/search/product/list">https://www.soldout.co.kr/search/product/list</a>
                   </div>
                 </div>
               </div>
