@@ -315,11 +315,12 @@
                         <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">총 판매금액</div>
-                            <div class="display-5 fw-500">$59,482</div>
+                            <div class="display-5 fw-500">{{trade.total_sales}}원</div>
+                            
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">평균 판매금액</div>
-                            <div class="display-5 fw-500">$50,000</div>
+                            <div class="display-5 fw-500">{{trade.average_sales}}원</div>
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">지난해 대비 판매 증가비율</div>
@@ -492,6 +493,7 @@
     <form action="{% url "common:logout" %}" method="post" id="logoutForm">
       {% csrf_token %}
     </form>
+
     <!-- Load Bootstrap JS bundle-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- Load global scripts-->

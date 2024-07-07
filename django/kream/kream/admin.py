@@ -9,11 +9,5 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ["name_kor"]
 
 
-class TradeAdmin(admin.ModelAdmin):
-    list_display = ("name_kor", "trade_date")
-    list_display_links = ["name_kor"]
-    search_fields = ["name_kor"]
-
-
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Trade, TradeAdmin)
+admin.site.register(Trade)
