@@ -29,13 +29,3 @@ if (!prev_year_sales) {
 
 calculation = calculation.toFixed(2) + "%";
 inc.innerHTML = calculation;
-
-// 거래내역이 없는 상품은 주소 이동 중지
-const productDetail = document.querySelector("#productDetail");
-
-productDetail.addEventListener("click", (e) => {
-  e.preventDefault();
-  console.log(e.target);
-  year = e.target.getAttribute("data-year");
-  console.log(year);
-});

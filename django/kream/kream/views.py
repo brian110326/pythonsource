@@ -23,5 +23,6 @@ def detail(request, pid, year):
             "single_product": single_product,
             "trade": trade,
             "all_trades": all_trades,
+            "current_year": year,
         },
     )
