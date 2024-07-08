@@ -47,11 +47,11 @@ def home(request):
     for i in range(total_sales_per_year.__len__()):
         total_sales_sum_per_year = total_sales_per_year[i].get("total_sales")
 
-    total_2024 = total_sales_per_year[total_sales_per_year.__len__() - 1].get(
-        "total_sales"
+    total_latest = total_sales_per_year[total_sales_per_year.__len__() - 1].get(
+        "trade_year"
     )
     total_2023 = total_sales_per_year[total_sales_per_year.__len__() - 2].get(
-        "total_sales"
+        "trade_year"
     )
 
     # 총 년도의 개수
@@ -62,9 +62,28 @@ def home(request):
     # toLocaleString : 콤마 넣기 (자바스크립트) const formatValue = value.toLocaleString('ko-KR');
 
     # 월마다 총 매출액
+    # select sum(total_sales) from Trade group by trade_month
+    # <QuerySet [{'trade_year': 2022, 'trade_month': 3, 'total_sales': 45600}, {'trade_year': 2022, 'trade_month': 5, 'total_sales': 454545}]>
+    total_sales_per_month = Trade.objects.values("trade_year", "trade_month").annotate(
+        total_sales=Sum("total_sales")
+    )
+
+    # trade_year가 가장 최신년도인 항목만 필터링
+    latest_year_data = [
+        data for data in total_sales_per_month if data["trade_year"] == total_latest
+    ]
+
+    latest_year_months = [data["trade_month"] for data in latest_year_data]
+    latest_year_months_data = [data["total_sales"] for data in latest_year_data]
 
     return render(
         request,
         "kream/home.html",
-        {"total_sales": total_sales_sum, "count_year": count_year, "year": year},
+        {
+            "total_sales": total_sales_sum,
+            "count_year": count_year,
+            "year": year,
+            "latest_year_months": latest_year_months,
+            "latest_year_months_data": latest_year_months_data,
+        },
     )

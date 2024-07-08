@@ -1,3 +1,27 @@
+// 오늘 날짜 넣기
+function insertCurrentDate() {
+  const dateElement = document.getElementById("date");
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더함
+  const day = String(today.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`; // 원하는 형식으로 날짜 포맷팅
+  dateElement.textContent = formattedDate;
+}
+
+// 페이지 로드 시 날짜를 삽입
+window.onload = insertCurrentDate;
+
+const today = new Date();
+month = today.getMonth() + 1;
+
+const month_array = document.querySelector("#month_array").value;
+const month_data = document.querySelector("#month_data").value;
+
+// string => 배열객체로 변환
+month_array2 = JSON.parse(month_array);
+month_data2 = JSON.parse(month_data);
+
 var ctx = document.getElementById("dashboardAreaChartLight").getContext("2d");
 
 var gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -7,7 +31,7 @@ gradient.addColorStop(1, "rgba(255,255,255,0)");
 var myLineChart = new Chart(ctx, {
   type: "line",
   data: {
-    labels: ["Mar 1", "Mar 2", "Mar 3", "Mar 4", "Mar 5", "Mar 6", "Mar 7", "Mar 8", "Mar 9", "Mar 10", "Mar 11", "Mar 12", "Mar 13"],
+    labels: month_array2,
     datasets: [
       {
         fill: {
@@ -23,7 +47,7 @@ var myLineChart = new Chart(ctx, {
         pointHoverBackgroundColor: "rgba(255, 255, 255, 1)",
         pointHoverRadius: 5,
         pointRadius: 0,
-        data: [10000, 30162, 26263, 18394, 18287, 28682, 31274, 33259, 25849, 24159, 32651, 31984, 38451],
+        data: month_data2,
       },
     ],
   },
