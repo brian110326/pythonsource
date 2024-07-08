@@ -44,9 +44,9 @@ def home(request):
     # <QuerySet [{'trade_year': 2022, 'total_sales': 1176912}, {'trade_year': 2023, 'total_sales': 799145}, {'trade_year': 2024, 'total_sales': 2699080}]>
     # total_sales_per_year = total_sales_per_year[0].get("total_sales")
 
-    for i in range(total_sales_per_year.__len__()):
-        total_sales_sum_per_year = total_sales_per_year[i].get("total_sales")
+    total_sales_sum_per_year = [data["total_sales"] for data in total_sales_per_year]
 
+    # 최신년도
     total_latest = total_sales_per_year[total_sales_per_year.__len__() - 1].get(
         "trade_year"
     )
@@ -64,6 +64,18 @@ def home(request):
     total_sales_per_month = Trade_Total.objects.values(
         "trade_year", "trade_month"
     ).annotate(total_sales=Sum("trade_price"))
+
+    # 최신 월의 값
+    month = total_sales_per_month[total_sales_per_month.__len__() - 1].get(
+        "trade_month"
+    )
+
+    # 각 년도마다 현재 최신 달
+    latest_month_per_year = [
+        data for data in total_sales_per_month if data["trade_month"] == month
+    ]
+
+    latest_month_per_year_data = [data["total_sales"] for data in latest_month_per_year]
 
     # trade_year가 가장 최신년도인 항목만 필터링
     latest_year_data = [
@@ -89,5 +101,8 @@ def home(request):
             "year": year,
             "latest_year_months": latest_year_months,
             "latest_year_months_data": latest_year_months_data,
+            "total_sales_sum_per_year": total_sales_sum_per_year,
+            "latest_month": month,
+            "latest_month_per_year_data": latest_month_per_year_data,
         },
     )

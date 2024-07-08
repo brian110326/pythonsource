@@ -32,6 +32,35 @@ dateElement.textContent = calc;
 const month_array = document.querySelector("#month_array").value;
 const month_data = document.querySelector("#month_data").value;
 
+// =================================================================================
+// 전년도 대비 증가량/감소량 계산
+const count_year = document.querySelector("#year_array").getAttribute("data-countyear");
+
+// 제일 최근 거래 년도의 데이터 가져오기
+const datas2 = document.querySelector("#year_data").value;
+filtered_datas2 = JSON.parse(datas2);
+calc2 = ((filtered_datas2[count_year - 1] - filtered_datas2[count_year - 2]) / filtered_datas2[count_year - 2]) * 100;
+
+calc2 = calc2.toFixed(2);
+if (calc2 > 0) {
+  calc2 = "+" + calc2;
+}
+calc2 += "%";
+const inputElement = document.getElementById("input");
+inputElement.textContent = calc2;
+
+// =================================================================================
+const latest_month_data = document.querySelector("#latest_month_data").value;
+filtered_latest_month_data = JSON.parse(latest_month_data);
+calc3 =
+  ((filtered_latest_month_data[count_year - 1] - filtered_latest_month_data[count_year - 2]) / filtered_latest_month_data[count_year - 2]) * 100;
+calc3 = calc3.toFixed(2);
+if (calc3 > 0) {
+  calc3 = "+" + calc3;
+}
+calc3 += "%";
+document.querySelector("#input2").innerHTML = calc3;
+
 // string => 배열객체로 변환
 month_array2 = JSON.parse(month_array);
 month_data2 = JSON.parse(month_data);
