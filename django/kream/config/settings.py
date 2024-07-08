@@ -126,9 +126,9 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # 로그인 성공 시 이동할 URL
-LOGIN_REDIRECT_URL = "/kream/detail/1/2024/"
+LOGIN_REDIRECT_URL = "/kream/home/"
 # 로그아웃 성공 시 이동할 URL
-LOGOUT_REDIRECT_URL = "/common/login"
+LOGOUT_REDIRECT_URL = "/common/login/"
 
 # 내 네이버 이메일을 이용해 client 에게 이메일 전송하기
 DEFAULT_FROM_EMAIL = "brian110326@naver.com"
@@ -141,5 +141,5 @@ EMAIL_HOST_PASSWORD = "Brian981103!"
 EMAIL_PORT = 465
 
 # 파일 업로드 설정
-MEDIA_ROOT = Path(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = Path(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
