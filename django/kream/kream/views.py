@@ -57,10 +57,14 @@ def home(request):
     # 총 년도의 개수
     count_year = total_sales_per_year.__len__()
 
+    # 최신 년도 값
+    year = total_sales_per_year[total_sales_per_year.__len__() - 1].get("trade_year")
+    # toLocaleString : 콤마 넣기 (자바스크립트) const formatValue = value.toLocaleString('ko-KR');
+
     # 월마다 총 매출액
 
     return render(
         request,
         "kream/home.html",
-        {"total_sales": total_sales_sum, "count_year": count_year},
+        {"total_sales": total_sales_sum, "count_year": count_year, "year": year},
     )
