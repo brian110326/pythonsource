@@ -472,7 +472,8 @@
     </form>
 
     {% for t in all_trades %}
-      <input type="hidden" name="" data-year="{{t.trade_year}}" data-month="{{t.trade_month}}" value="{{t.monthly_sales}}" id="monthly_sales">
+      <input type="hidden" name="" value="{{trade.trade_year}}" id="curr_page_year">
+      <input type="hidden" name="" data-year="{{t.trade_year}}" data-yearlySales="{{t.yearly_sales}}" data-month="{{t.trade_month}}" value="{{t.monthly_sales}}" id="monthly_sales">
       <input type="hidden" name="" data-year="{{t.trade_year}}" data-size="{{t.trade_size}}" value="{{t.size_sales}}" id="size_sales">
     {% endfor %}
 
