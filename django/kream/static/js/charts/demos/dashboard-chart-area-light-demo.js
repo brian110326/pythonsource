@@ -72,6 +72,15 @@ input_ = input3_.replace(/^\[|\]$/g, "");
 document.querySelector("#input3_").innerHTML = input_ + "분기 매출액";
 
 // =================================================================================
+const input4 = document.querySelector("#input4").innerHTML;
+input4_1 = parseFloat(input4);
+input4_2 = input4_1.toFixed(2);
+if (input4_1 > 0) {
+  input4_1 = "+" + input4_1;
+}
+input4_2 += "%";
+
+document.querySelector("#input4").innerHTML = input4_2;
 // string => 배열객체로 변환
 month_array2 = JSON.parse(month_array);
 month_data2 = JSON.parse(month_data);

@@ -131,6 +131,35 @@ def home(request):
 
     curr_quarter = [data["quarter"] for data in curr_quarter_total_sales]
 
+    # 현재가 1분기일때는 작년 4분기와 비교
+    if current_quarter == 1:
+        prev_quarter_total_sales = [
+            data
+            for data in quarter_group
+            if data["trade_year"] == year - 1 and data["quarter"] == 4
+        ]
+
+    # 최신년도 이전분기 총매출액
+    prev_quarter_total_sales = [
+        data
+        for data in quarter_group
+        if data["trade_year"] == year and data["quarter"] == current_quarter - 1
+    ]
+
+    prev_quarter_total_sales_data = [
+        data["total_sales"] for data in prev_quarter_total_sales
+    ]
+
+    if curr_quarter_total_sales_data and prev_quarter_total_sales_data:
+        curr_total_sales = curr_quarter_total_sales_data[0]
+        prev_total_sales = prev_quarter_total_sales_data[0]
+        sales_difference = curr_total_sales - prev_total_sales
+        sales_percentage_change = ((sales_difference) / prev_total_sales) * 100
+    else:
+        curr_total_sales = prev_total_sales = sales_difference = (
+            sales_percentage_change
+        ) = None
+
     return render(
         request,
         "kream/home.html",
@@ -146,5 +175,6 @@ def home(request):
             "latest_month_per_year_data": latest_month_per_year_data,
             "curr_quarter_total_sales_data": curr_quarter_total_sales_data,
             "curr_quarter": curr_quarter,
+            "sales_percentage_change": sales_percentage_change,
         },
     )
