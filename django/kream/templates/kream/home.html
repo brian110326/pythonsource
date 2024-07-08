@@ -50,7 +50,14 @@
                         </tr>
                         
                         <tr class="py-2">  
-                          <td class="h6">3분기 매출액</td>
+                          <td class="h6" id="input3_">{{curr_quarter}}</td>
+                          <td class="h6">
+                            <div class="text-success fw-500" id="input3">{{curr_quarter_total_sales_data}}</div>
+                          </td>
+                        </tr>
+
+                        <tr class="py-2">  
+                          <td class="h6">이전 분기 매출액 비교</td>
                           <td class="h6">
                             <div class="text-success fw-500" id="input3"></div>
                           </td>
@@ -198,6 +205,7 @@
       {% csrf_token %}
     </form>
 
+    
     <input type="hidden" data-countyear="{{count_year}}" name="" value="{{year}}" id="year_array">
     <input type="hidden" name="" value="{{total_sales_sum_per_year}}" id="year_data">
     <input type="hidden" data-countmonth="{{count_month}}" name="" value="{{latest_year_months}}" id="month_array">

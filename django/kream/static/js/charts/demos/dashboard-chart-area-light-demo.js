@@ -61,6 +61,17 @@ if (calc3 > 0) {
 calc3 += "%";
 document.querySelector("#input2").innerHTML = calc3;
 
+// =================================================================================
+const input3 = document.querySelector("#input3").innerHTML;
+input = input3.replace(/^\[|\]$/g, "");
+document.querySelector("#input3").innerHTML = input + "원";
+
+// =================================================================================
+const input3_ = document.querySelector("#input3_").innerHTML;
+input_ = input3_.replace(/^\[|\]$/g, "");
+document.querySelector("#input3_").innerHTML = input_ + "분기 매출액";
+
+// =================================================================================
 // string => 배열객체로 변환
 month_array2 = JSON.parse(month_array);
 month_data2 = JSON.parse(month_data);

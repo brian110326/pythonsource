@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade, Trade_Total
-from django.db.models import Sum
+from django.db.models import Sum, Case, When, IntegerField
 
 
 # Create your views here.
+@login_required(login_url="common:login")
 def detail(request, pid, year):
     single_product = get_object_or_404(Product, id=pid)
     product_list = Product.objects.all()
@@ -27,6 +28,7 @@ def detail(request, pid, year):
     )
 
 
+@login_required(login_url="common:login")
 def home(request):
     # 전체 매출액
     # select sum(total_sales) from Trade group by product
@@ -91,6 +93,44 @@ def home(request):
     # 최신 년도의 거래된 월마다의 총 매출액
     latest_year_months_data = [data["total_sales"] for data in latest_year_data]
 
+    # 현재 월을 이용하여 현재 분기 계산
+    if month in [1, 2, 3]:
+        current_quarter = 1
+    elif month in [4, 5, 6]:
+        current_quarter = 2
+    elif month in [7, 8, 9]:
+        current_quarter = 3
+    elif month in [10, 11, 12]:
+        current_quarter = 4
+
+    # 분기별 그룹화
+    quarter_group = (
+        Trade_Total.objects.annotate(
+            quarter=Case(
+                When(trade_month__in=[1, 2, 3], then=1),
+                When(trade_month__in=[4, 5, 6], then=2),
+                When(trade_month__in=[7, 8, 9], then=3),
+                When(trade_month__in=[10, 11, 12], then=4),
+                output_field=IntegerField(),
+            )
+        )
+        .values("quarter", "trade_year")
+        .annotate(total_sales=Sum("trade_price"))
+    )
+
+    # 최신년도 현재분기 총매출액
+    curr_quarter_total_sales = [
+        data
+        for data in quarter_group
+        if data["trade_year"] == year and data["quarter"] == current_quarter
+    ]
+
+    curr_quarter_total_sales_data = [
+        data["total_sales"] for data in curr_quarter_total_sales
+    ]
+
+    curr_quarter = [data["quarter"] for data in curr_quarter_total_sales]
+
     return render(
         request,
         "kream/home.html",
@@ -104,5 +144,7 @@ def home(request):
             "total_sales_sum_per_year": total_sales_sum_per_year,
             "latest_month": month,
             "latest_month_per_year_data": latest_month_per_year_data,
+            "curr_quarter_total_sales_data": curr_quarter_total_sales_data,
+            "curr_quarter": curr_quarter,
         },
     )
