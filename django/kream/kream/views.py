@@ -47,7 +47,6 @@ def home(request):
     for i in range(total_sales_per_year.__len__()):
         total_sales_sum_per_year = total_sales_per_year[i].get("total_sales")
 
-    # 최신년도 총 매출액
     total_2024 = total_sales_per_year[total_sales_per_year.__len__() - 1].get(
         "total_sales"
     )
@@ -55,12 +54,13 @@ def home(request):
         "total_sales"
     )
 
+    # 총 년도의 개수
+    count_year = total_sales_per_year.__len__()
+
     # 월마다 총 매출액
 
     return render(
         request,
         "kream/home.html",
-        {
-            "total_sales": total_sales_sum,
-        },
+        {"total_sales": total_sales_sum, "count_year": count_year},
     )
