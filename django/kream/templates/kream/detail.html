@@ -153,14 +153,17 @@
               <ul class="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="dropdownMenuProfile">
                   {% if not user.is_authenticated %}
                     <li>
-                      <a class="dropdown-item" href="{% url "common:login" %}">Login</a>
+                      <a class="dropdown-item" href="{% url "common:login" %}">로그인</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="{% url "common:register" %}">Register</a>
+                      <a class="dropdown-item" href="{% url "common:register" %}">회원가입</a>
                     </li>
                   {% else %}
                   <li>
-                    <a class="dropdown-item" href="#" id="logout">Logout</a>
+                    <a class="dropdown-item" href="#" id="logout">로그아웃</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url "common:password_change" %}" id="logout">비밀번호 변경</a>
                   </li>
               {% endif %}
               </ul>
@@ -328,7 +331,7 @@
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">지난해 대비 판매 증가비율</div>
-                            <div class="display-5 fw-400 text-success">119%</div>
+                            <div class="display-5 fw-400 text-success" id="increase"></div>
                           </div>
                         </div>
                       </div>
@@ -490,6 +493,7 @@
 
     <script src="{% static "js/datatables/datatables-simple-demo.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
+    <script src="{% static "js/detail.js" %}"></script>
     {% block script %}{% endblock script %}
   </body>
   {% endblock content %}
