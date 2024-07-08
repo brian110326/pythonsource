@@ -26,3 +26,7 @@ def detail(request, pid, year):
             "current_year": year,
         },
     )
+
+
+def home(request):
+    return render(request, "kream/home.html")

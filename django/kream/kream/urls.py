@@ -6,4 +6,5 @@ app_name = "kream"
 
 urlpatterns = [
     path("detail/<int:pid>/<int:year>/", views.detail, name="detail"),
+    path("home/", views.home, name="home"),
 ]
