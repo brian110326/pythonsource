@@ -12,9 +12,6 @@ function insertCurrentDate() {
 // 페이지 로드 시 날짜를 삽입
 window.onload = insertCurrentDate;
 
-const today = new Date();
-month = today.getMonth() + 1;
-
 const month_array = document.querySelector("#month_array").value;
 const month_data = document.querySelector("#month_data").value;
 
@@ -83,3 +80,6 @@ var myLineChart = new Chart(ctx, {
     },
   },
 });
+
+// 전월 대비 증가량/감소량 계산
+const count_month = document.querySelector("#month_array").getAttribute("data-month");

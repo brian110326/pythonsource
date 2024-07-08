@@ -31,3 +31,15 @@ class Trade(models.Model):
 
     def __str__(self) -> str:
         return self.product.name_kor
+
+
+class Trade_Total(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    trade_size = models.CharField(max_length=10)
+    trade_price = models.IntegerField(default=0)
+    trade_year = models.IntegerField(default=0)
+    trade_month = models.IntegerField(default=0)
+    trade_hour = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return self.product.name_kor
