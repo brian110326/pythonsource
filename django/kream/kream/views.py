@@ -214,6 +214,12 @@ def home(request):
 
     # ====================================================================
     # 시간대별 가장 많이 팔린 제품
+    top_time = (
+        Trade_Total.objects.values("trade_hour")
+        .annotate(hour_count=Count("*"))
+        .order_by("-hour_count")
+    )
+    # <QuerySet [{'trade_hour': 6, 'hour_count': 6}]>
 
     return render(
         request,
@@ -236,5 +242,7 @@ def home(request):
             "products": products,
             "top_sales_month_latest_data_count": top_sales_month_latest_data_count,
             "combined_data": combined_data,
+            # ==============================================================
+            "top_time": top_time,
         },
     )

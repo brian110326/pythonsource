@@ -13,3 +13,7 @@ def register(request):
         form = UserForm()
 
     return render(request, "common/register.html", {"form": form})
+
+
+def profile(request):
+    return render(request, "common/profile.html")
