@@ -29,6 +29,11 @@ def detail(request, pid, year):
 
 
 @login_required(login_url="common:login")
+def list(request):
+    return render(request, "kream/list.html")
+
+
+@login_required(login_url="common:login")
 def home(request):
     # 전체 매출액
     # select sum(total_sales) from Trade group by product
