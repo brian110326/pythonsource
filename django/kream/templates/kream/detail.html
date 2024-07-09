@@ -157,16 +157,16 @@
                           <div class="mb-4 text-center text-md-start">
                             
                             <div class="text-xl font-monospace text-muted mb-1">총 판매금액</div>
-                            <div class="display-5 fw-400">{{total_sum_data}}원</div>                            
+                            <div class="display-6 fw-400" id="totalSale">{{total_sum_data}}</div>                            
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1">평균 판매금액</div>
-                            <div class="display-5 fw-400">{{total_avg_data}}원</div>
+                            <div class="display-6 fw-400" id="avgSale">{{total_avg_data}}</div>
                             
                           </div>
                           <div class="mb-4 text-center text-md-start">
                             <div class="text-xl font-monospace text-muted mb-1" id="increaseText">지난해 대비 판매 증가비율</div>
-                            <div class="display-5 fw-400 text-success" id="increase"></div>
+                            <div class="display-6 fw-400 text-success" id="increase"></div>
                           </div>
                         </div>
                       </div>
@@ -320,6 +320,7 @@
     <script src="{% static "js/datatables/datatables-simple-demo.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
     <script src="{% static "js/detail.js" %}"></script>
+    <script src="{% static "js/digit.js" %}"></script>
     {% block script %}{% endblock script %}
   </body>
   {% endblock content %}

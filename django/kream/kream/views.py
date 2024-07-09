@@ -52,7 +52,7 @@ def detail(request, pid, year):
     if total_sum_data_prev_year:
         total_sum_data_prev_year = total_sum_data_prev_year[0]
     else:
-        total_sum_data_prev_year = None
+        total_sum_data_prev_year = 0
 
     # =====================================================================
     # 년도 선택 항목들
