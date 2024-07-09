@@ -51,7 +51,8 @@
                   <div class="card-body p-5">
                     <div class="card-title">회원 정보</div>
                     <div class="card-subtitle mb-4"></div>
-                    <form>
+                    <form method="post">
+                      {% csrf_token %}
                       <!-- Form Group (username)-->
                       <div class="mb-4">
                         <mwc-textfield class="w-100" label="회원아이디" outlined="outlined" value="{{user.username}}" readonly="readonly"></mwc-textfield>
@@ -60,27 +61,27 @@
                       <div class="row mb-4">
                         <!-- Form Group (first name)-->
                         <div class="col-md-6">
-                          <mwc-textfield class="w-100" label="이름" outlined="outlined" value=""></mwc-textfield>
+                          <mwc-textfield class="w-100" name="first_name" label="이름" outlined="outlined" value="{{user.first_name}}"></mwc-textfield>
                         </div>
                         <!-- Form Group (last name)-->
                         <div class="col-md-6">
-                          <mwc-textfield class="w-100" label="성" outlined="outlined" value=""></mwc-textfield>
+                          <mwc-textfield class="w-100" name="last_name" label="성" outlined="outlined" value="{{user.last_name}}"></mwc-textfield>
                         </div>
                       </div>
                       <!-- Form Row -->
                       <div class="row mb-4">
                         <!-- Form Group (organization name)-->
                         <div class="col-md-6">
-                          <mwc-textfield class="w-100" label="전화번호" outlined="outlined" type="tel" value=""></mwc-textfield>
+                          <mwc-textfield class="w-100" name="tel" label="전화번호" outlined="outlined" value="{{user.tel}}"></mwc-textfield>
                         </div>
                         <!-- Form Group (location)-->
                         <div class="col-md-6">
-                          <mwc-textfield class="w-100" label="주소" outlined="outlined" value=""></mwc-textfield>
+                          <mwc-textfield class="w-100" name="address" label="주소" outlined="outlined" value="{{user.address}}"></mwc-textfield>
                         </div>
                       </div>
                       <!-- Form Group (email address)-->
                       <div class="mb-4">
-                        <mwc-textfield class="w-100" label="이메일주소" outlined="outlined" type="email" value="{{user.email}}"></mwc-textfield>
+                        <mwc-textfield class="w-100" name="email" label="이메일주소" outlined="outlined" type="email" value="{{user.email}}"></mwc-textfield>
                       </div>
                       <!-- Form Row-->
                       <div class="row mb-4">
@@ -89,7 +90,7 @@
                       </div>
                       <!-- Save changes button-->
                       <div class="text-end">
-                        <button class="btn btn-primary" type="button">
+                        <button class="btn btn-primary" type="submit">
                           수정
                         </button>
                       </div>
