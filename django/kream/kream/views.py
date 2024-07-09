@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade, Trade_Total
-from django.db.models import Sum, Case, When, IntegerField, Count, Max
+from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 
 
 # Create your views here.
@@ -11,9 +11,109 @@ def detail(request, pid, year):
     product_list = Product.objects.all()
 
     # 전체 판매금액과 평균금액은 동일
-    trade = Trade.objects.filter(product=single_product, trade_year=year)[0]
+    # trade = Trade.objects.filter(product=single_product, trade_year=year)[0]
+
+    total_sum = Trade_Total.objects.values("product").annotate(
+        total_sales=Sum("trade_price")
+    )
+    # <QuerySet [{'product': 1, 'total_sales': 663678}, {'product': 2, 'total_sales': 718412}, {'product': 3, 'total_sales': 9341}]>
+
+    total_sum_data = [
+        data["total_sales"] for data in total_sum if data["product"] == pid
+    ]
+
+    total_avg = Trade_Total.objects.values("product").annotate(
+        avg_sales=Avg("trade_price")
+    )
+    # <QuerySet [{'product': 1, 'total_sales': 663678}, {'product': 2, 'total_sales': 718412}, {'product': 3, 'total_sales': 9341}]>
+
+    total_avg_data = [data["avg_sales"] for data in total_avg if data["product"] == pid]
 
     all_trades = Trade.objects.filter(product=single_product)
+
+    # ===============================================================================
+
+    total_sum_year = Trade_Total.objects.values("product", "trade_year").annotate(
+        total_sales=Sum("trade_price")
+    )
+
+    total_sum_data_curr_year = [
+        data["total_sales"]
+        for data in total_sum_year
+        if data["trade_year"] == year and data["product"] == pid
+    ][0]
+
+    total_sum_data_prev_year = [
+        data["total_sales"]
+        for data in total_sum_year
+        if data["trade_year"] == year - 1 and data["product"] == pid
+    ]
+
+    if total_sum_data_prev_year:
+        total_sum_data_prev_year = total_sum_data_prev_year[0]
+    else:
+        total_sum_data_prev_year = None
+
+    # =====================================================================
+    # 년도 선택 항목들
+    year_list = Trade_Total.objects.values("product", "trade_year").order_by(
+        "-trade_year"
+    )
+    year_list_data = [data for data in year_list if data["product"] == pid]
+    year_list_data = sorted(
+        set(data["trade_year"] for data in year_list_data), reverse=True
+    )
+
+    # =========================================================================
+    # 선그래프 월데이터
+    month_list = (
+        Trade_Total.objects.values("product", "trade_year", "trade_month")
+        .annotate(total_sales=Sum("trade_price"))
+        .order_by("trade_month")
+    )
+
+    month_list_data = [
+        data
+        for data in month_list
+        if data["product"] == pid and data["trade_year"] == year
+    ]
+
+    month_list_data_month = [data["trade_month"] for data in month_list_data]
+    month_list_data_sales = [data["total_sales"] for data in month_list_data]
+
+    # ==========================================================================
+    # 상품 목록 보여주기(해당 년도만 보여주기)
+    product_list = Trade_Total.objects.values("product", "trade_year")
+    product_list_data = [
+        data
+        for data in product_list
+        if data["trade_year"] == year and data["product"] != pid
+    ]
+    product_list_data_pid = set(data["product"] for data in product_list_data)
+
+    products = Product.objects.filter(id__in=product_list_data_pid).values(
+        "id", "brand", "name_kor", "model_no", "original_price", "product_detail_url"
+    )
+
+    # ==========================================================================
+    # 원차트용 사이즈별 판매량
+    total_sales_per_size = (
+        Trade_Total.objects.values("product", "trade_year", "trade_size")
+        .annotate(total_sales=Sum("trade_price"))
+        .order_by("trade_size")
+    )
+
+    size_list = [
+        data["trade_size"]
+        for data in total_sales_per_size
+        if data["trade_year"] == year and data["product"] == pid
+    ]
+
+    size_sales = [
+        data["total_sales"]
+        for data in total_sales_per_size
+        if data["trade_year"] == year and data["product"] == pid
+    ]
 
     return render(
         request,
@@ -21,9 +121,21 @@ def detail(request, pid, year):
         {
             "product_list": product_list,
             "single_product": single_product,
-            "trade": trade,
             "all_trades": all_trades,
             "current_year": year,
+            "total_sum_data": total_sum_data[0],
+            "total_avg_data": total_avg_data[0],
+            "year": year,
+            "total_sum_data_curr_year": total_sum_data_curr_year,
+            "total_sum_data_prev_year": total_sum_data_prev_year,
+            "year_list_data": year_list_data,
+            "month_list_data_month": month_list_data_month,
+            "month_list_data_sales": month_list_data_sales,
+            "products": products,
+            "year_list": year_list,
+            "pid": pid,
+            "size_list": size_list,
+            "size_sales": size_sales,
         },
     )
 
