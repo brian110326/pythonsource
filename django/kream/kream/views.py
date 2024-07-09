@@ -180,7 +180,7 @@ def home(request):
         {"sales_count": data["sales_count"], "product": data["product"]}
         for data in top_sales_month_latest
     ]
-    top_sales_month_latest_data = top_sales_month_latest_data[:5]
+    top_sales_month_latest_data = top_sales_month_latest_data[:10]
 
     top_sales_month_latest_data_pid = [
         data["product"] for data in top_sales_month_latest_data

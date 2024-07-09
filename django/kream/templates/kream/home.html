@@ -99,30 +99,13 @@
               <div class="col-md-6 mb-5">
                 <div class="card card-raised border-top border-4 border-secondary h-100">
                   <div class="card-body p-5">
-                    <div class="overline text-muted mb-4">시간대별 가장 많이 판매된 제품</div>
+                    <div class="overline text-muted mb-4">가장 많이 팔린 시간대</div>
                     <h2 class="mb-4">
                       <sup>$</sup>
                       -10,800
                       <sup>.22</sup>
                     </h2>
-                    <div class="mb-2">
-                      <div class="mb-1">Roger Henn</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="flex-shrink-0">$5K</div>
-                      </div>
-                    </div>
-                    <div class="mb-2">
-                      <div class="mb-1">Caroline McLean</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="flex-shrink-0">$30K</div>
-                      </div>
-                    </div>
+                    {% comment %} 반복 영역 {% endcomment %}
                     <div class="mb-0">
                       <div class="mb-1">PayPal</div>
                       <div class="d-flex align-items-center">
@@ -132,6 +115,7 @@
                         <div class="flex-shrink-0">$0.22</div>
                       </div>
                     </div>
+
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray">
                     <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="#!">
@@ -144,14 +128,14 @@
               <div class="col-md-6 mb-5">
                 <div class="card card-raised border-top border-4 border-success h-100">
                   <div class="card-body p-5">
-                    <div class="overline text-muted mb-4">이번달 가장 많이 팔린 제품</div>
-                    
+                    <div class="overline text-muted mb-4">이번달 가장 많이 팔린 제품 TOP 10</div>
+
                     {% for item in combined_data %}
                       <div class="mb-2">
                         <div class="mb-1">{{item.product_name}}</div>
                         <div class="d-flex align-items-center">
                           <div class="progress w-100 me-3" style="height: 0.25rem">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ item.sales_count}}%" aria-valuenow="{{ item.sales_count}}" aria-valuemin="0"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{item.sales_count}}%" aria-valuenow="{{item.sales_count}}" aria-valuemin="0"></div>
                           </div>
                           <div class="flex-shrink-0">{{item.sales_count}}</div>
                         </div>
