@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
-from .models import Product, Trade, Trade_Total
+from .models import Product, Trade_Total
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 
 
@@ -207,6 +207,7 @@ def home(request):
     latest_month_per_year = [
         data for data in total_sales_per_month if data["trade_month"] == month
     ]
+    # [{'trade_year': 2023, 'trade_month': 8, 'total_sales': 453}, {'trade_year': 2024, 'trade_month': 8, 'total_sales': 1317098}]
 
     latest_month_per_year_data = [data["total_sales"] for data in latest_month_per_year]
 
@@ -260,7 +261,7 @@ def home(request):
         data["total_sales"] for data in curr_quarter_total_sales
     ]
 
-    curr_quarter = [data["quarter"] for data in curr_quarter_total_sales]
+    curr_quarter = [data["quarter"] for data in curr_quarter_total_sales][0]
 
     # 현재가 1분기일때는 작년 4분기와 비교
     if current_quarter == 1:
@@ -284,6 +285,7 @@ def home(request):
     if curr_quarter_total_sales_data and prev_quarter_total_sales_data:
         curr_total_sales = curr_quarter_total_sales_data[0]
         prev_total_sales = prev_quarter_total_sales_data[0]
+        curr_quarter_total_sales_data = curr_quarter_total_sales_data[0]
         sales_difference = curr_total_sales - prev_total_sales
         sales_percentage_change = ((sales_difference) / prev_total_sales) * 100
     else:
@@ -375,5 +377,6 @@ def home(request):
             "combined_data": combined_data,
             # ==============================================================
             "top_time": top_time,
+            "latest_month_per_year_len": latest_month_per_year.__len__(),
         },
     )

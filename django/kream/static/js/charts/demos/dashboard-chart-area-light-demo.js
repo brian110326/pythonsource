@@ -25,9 +25,11 @@ if (calc < 0) {
   icon.innerHTML = "trending_down";
 }
 
-calc = calc.toFixed(2) + "%";
+calc_ = parseFloat(calc.toFixed(2));
+calc_2 = calc_.toLocaleString("ko-KR");
+calc_2 += "%";
 const dateElement = document.getElementById("date");
-dateElement.textContent = calc;
+dateElement.textContent = calc_2;
 
 const month_array = document.querySelector("#month_array").value;
 const month_data = document.querySelector("#month_data").value;
@@ -41,46 +43,69 @@ const datas2 = document.querySelector("#year_data").value;
 filtered_datas2 = JSON.parse(datas2);
 calc2 = ((filtered_datas2[count_year - 1] - filtered_datas2[count_year - 2]) / filtered_datas2[count_year - 2]) * 100;
 
-calc2 = calc2.toFixed(2);
+calc2 = parseFloat(calc2.toFixed(2));
+let calc2_str = calc2.toLocaleString("ko-KR");
 if (calc2 > 0) {
-  calc2 = "+" + calc2;
+  calc2_str = "+" + calc2_str;
 }
-calc2 += "%";
+calc2_str += "%";
 const inputElement = document.getElementById("input");
-inputElement.textContent = calc2;
+inputElement.textContent = calc2_str;
 
 // =================================================================================
 const latest_month_data = document.querySelector("#latest_month_data").value;
+const len = document.querySelector("#latest_month_data").getAttribute("data-len");
 filtered_latest_month_data = JSON.parse(latest_month_data);
-calc3 =
-  ((filtered_latest_month_data[count_year - 1] - filtered_latest_month_data[count_year - 2]) / filtered_latest_month_data[count_year - 2]) * 100;
-calc3 = calc3.toFixed(2);
-if (calc3 > 0) {
-  calc3 = "+" + calc3;
+
+if (!filtered_latest_month_data[len - 2]) {
+  filtered_latest_month_data[len - 2] = 0;
 }
-calc3 += "%";
-document.querySelector("#input2").innerHTML = calc3;
+
+let calc3;
+
+if (filtered_latest_month_data[len - 2] == 0) {
+  calc3 = 0.0;
+}
+
+calc3 = ((filtered_latest_month_data[len - 1] - filtered_latest_month_data[len - 2]) / filtered_latest_month_data[len - 2]) * 100;
+
+calc3 = parseFloat(calc3.toFixed(2));
+let calc3_str = calc3.toLocaleString("ko-KR");
+if (calc3 > 0) {
+  calc3_str = "+" + calc3_str;
+}
+
+calc3_str += "%";
+document.querySelector("#input2").innerHTML = calc3_str;
 
 // =================================================================================
 const input3 = document.querySelector("#input3").innerHTML;
-input = input3.replace(/^\[|\]$/g, "");
-document.querySelector("#input3").innerHTML = input + "원";
+input3Value = parseInt(input3);
+input3Value_ = input3Value.toLocaleString("ko-KR");
+document.querySelector("#input3").innerHTML = input3Value_ + "원";
 
 // =================================================================================
 const input3_ = document.querySelector("#input3_").innerHTML;
-input_ = input3_.replace(/^\[|\]$/g, "");
-document.querySelector("#input3_").innerHTML = input_ + "분기 매출액";
+
+document.querySelector("#input3_").innerHTML = input3_ + "분기 매출액";
 
 // =================================================================================
 const input4 = document.querySelector("#input4").innerHTML;
-input4_1 = parseFloat(input4);
-input4_2 = input4_1.toFixed(2);
-if (input4_2 > 0) {
-  input4_2 = "+" + input4_2;
-}
-input4_2 += "%";
 
-document.querySelector("#input4").innerHTML = input4_2;
+let input4_1 = parseFloat(input4);
+
+let input4_2 = parseFloat(input4_1.toFixed(2));
+
+let input4_3 = input4_2.toLocaleString("ko-KR");
+
+if (input4_2 > 0) {
+  input4_3 = "+" + input4_3;
+}
+
+input4_3 += "%";
+
+document.querySelector("#input4").innerHTML = input4_3;
+
 // string => 배열객체로 변환
 month_array2 = JSON.parse(month_array);
 month_data2 = JSON.parse(month_data);

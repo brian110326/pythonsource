@@ -17,19 +17,19 @@ class Product(models.Model):
         return self.name_kor
 
 
-class Trade(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-    trade_year = models.IntegerField(default=0)
-    trade_month = models.IntegerField(default=0)
-    trade_size = models.CharField(max_length=10)
-    total_sales = models.IntegerField(default=0)
-    average_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-    monthly_sales = models.IntegerField(default=0)
-    yearly_sales = models.IntegerField(default=0)
-    size_sales = models.IntegerField(default=0)
+# class Trade(models.Model):
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+#     trade_year = models.IntegerField(default=0)
+#     trade_month = models.IntegerField(default=0)
+#     trade_size = models.CharField(max_length=10)
+#     total_sales = models.IntegerField(default=0)
+#     average_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+#     monthly_sales = models.IntegerField(default=0)
+#     yearly_sales = models.IntegerField(default=0)
+#     size_sales = models.IntegerField(default=0)
 
-    def __str__(self) -> str:
-        return self.product.name_kor
+#     def __str__(self) -> str:
+#         return self.product.name_kor
 
 
 class Trade_Total(models.Model):
