@@ -103,56 +103,23 @@
                   </thead>
                   <tbody>
                     {% comment %} 반복영역 {% endcomment %}
-                    <tr>
-                      <td>2005/02/11</td>
-                      <td>9958</td>
-                      <td>Unity Pugh</td>
-                      <td>$12.00</td>
-                      <td>
-                        <span class="badge bg-primary">Processing</span></td>
-                    </tr>
+                    
+                    {% for product in product_list %}
+                        {% for data in latest_year_per_product|slice:":1" %}
+                            <tr id="productDetail">
+                                <td>{{product.brand}}</td>
+                                <td><a href="{% url "kream:detail" product.id data.max_year %}" data-year="{{trade.trade_year}}" id="url" data-pid="{{product.id}}">{{product.name_kor}}</a></td>
+                                <td>{{product.model_no}}</td>
+                                <td>{{product.original_price}}원</td>
+                                <td><a href="{{product.product_detail_url}}">{{product.product_detail_url}}</a></td>
+                            </tr>  
+                        {% endfor %}
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
             </div>
-            <div class="row gx-5">
-              <div class="col-xl-6 mb-5">
-                <div class="card card-raised h-100">
-                  <div class="card-body p-4">
-                    <div class="d-flex justify-content-between">
-                      <div class="me-4">
-                        <h2 class="display-6 mb-0">Privacy Suggestions</h2>
-                        <p class="card-text">Take our privacy checkup to choose which settings are right for you.</p>
-                      </div>
-                      <img src="{% static "assets/img/illustrations/security.svg" %}" alt="..." style="height: 6rem"/>
-                    </div>
-                  </div>
-                  <div class="card-footer bg-transparent position-relative ripple-gray px-4">
-                    <a class="stretched-link text-decoration-none" href="#!">Review suggestions (4)</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 mb-5">
-                <div class="card card-raised h-100">
-                  <div class="card-body p-4">
-                    <div class="d-flex justify-content-between">
-                      <div class="me-4">
-                        <h2 class="display-6 mb-0">Account Storage</h2>
-                        <p class="card-text">Your account storage is shared across all devices.</p>
-                        <div class="progress mb-2" style="height: 0.25rem">
-                          <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="30"></div>
-                        </div>
-                        <div class="card-text">10 GB of 30 GB used</div>
-                      </div>
-                      <img src="{% static "assets/img/illustrations/cloud.svg" %}" alt="..." style="height: 6rem"/>
-                    </div>
-                  </div>
-                  <div class="card-footer bg-transparent position-relative ripple-gray px-4">
-                    <a class="stretched-link text-decoration-none" href="#!">Manage storage</a>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </main>
         <!-- Footer-->
@@ -169,6 +136,7 @@
     <script type="module" src="{% static "js/material.js" %}"></script>
     <script src="{% static "js/scripts.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
+    <script src="{% static "js/list.js" %}"></script>
     <!-- Load Simple DataTables Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="{% static "js/datatables/datatables-simple-demo.js" %}"></script>

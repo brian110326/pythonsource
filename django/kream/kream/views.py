@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade, Trade_Total
-from django.db.models import Sum, Case, When, IntegerField, Count
+from django.db.models import Sum, Case, When, IntegerField, Count, Max
 
 
 # Create your views here.
@@ -30,7 +30,21 @@ def detail(request, pid, year):
 
 @login_required(login_url="common:login")
 def list(request):
-    return render(request, "kream/list.html")
+    product_list = Product.objects.all()
+
+    latest_year_per_product = Trade_Total.objects.values("product").annotate(
+        max_year=Max("trade_year")
+    )
+    # <QuerySet [{'product': 1, 'max_year': 2024}, {'product': 2, 'max_year': 2024}, {'product': 3, 'max_year': 2024}]>
+
+    return render(
+        request,
+        "kream/list.html",
+        {
+            "product_list": product_list,
+            "latest_year_per_product": latest_year_per_product,
+        },
+    )
 
 
 @login_required(login_url="common:login")
