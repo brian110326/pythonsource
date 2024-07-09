@@ -120,7 +120,7 @@
                         <div class="progress w-100 me-3" style="height: 0.25rem">
                           <div class="progress-bar bg-secondary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <div class="flex-shrink-0">$5K</div>
+                        <div class="flex-shrink-0">$30K</div>
                       </div>
                     </div>
                     <div class="mb-0">
@@ -145,48 +145,19 @@
                 <div class="card card-raised border-top border-4 border-success h-100">
                   <div class="card-body p-5">
                     <div class="overline text-muted mb-4">이번달 가장 많이 팔린 제품</div>
-                    <h2 class="mb-4">
-                      <sup>$</sup>
-                      11,532
-                      <sup>.78</sup>
-                    </h2>
                     
-                    <div class="mb-2">
-                      <div class="mb-1">Bank Transfer</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    {% for item in combined_data %}
+                      <div class="mb-2">
+                        <div class="mb-1">{{item.product_name}}</div>
+                        <div class="d-flex align-items-center">
+                          <div class="progress w-100 me-3" style="height: 0.25rem">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ item.sales_count}}%" aria-valuenow="{{ item.sales_count}}" aria-valuemin="0"></div>
+                          </div>
+                          <div class="flex-shrink-0">{{item.sales_count}}</div>
                         </div>
-                        <div class="flex-shrink-0">$11K</div>
                       </div>
-                    </div>
-                    <div class="mb-2">
-                      <div class="mb-1">Stripe</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="flex-shrink-0">$459.66</div>
-                      </div>
-                    </div>
-                    <div class="mb-2">
-                      <div class="mb-1">PayPal</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="flex-shrink-0">$0.22</div>
-                      </div>
-                    </div>
-                    <div class="mb-0">
-                      <div class="mb-1">Other</div>
-                      <div class="d-flex align-items-center">
-                        <div class="progress w-100 me-3" style="height: 0.25rem">
-                          <div class="progress-bar bg-success" role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="flex-shrink-0">$0.81</div>
-                      </div>
-                    </div>
+                    {% endfor %}
+
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray">
                     <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="#!">

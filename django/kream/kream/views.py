@@ -180,11 +180,39 @@ def home(request):
         {"sales_count": data["sales_count"], "product": data["product"]}
         for data in top_sales_month_latest
     ]
+    top_sales_month_latest_data = top_sales_month_latest_data[:5]
+
+    top_sales_month_latest_data_pid = [
+        data["product"] for data in top_sales_month_latest_data
+    ]
+
+    top_sales_month_latest_data_count = [
+        data["sales_count"] for data in top_sales_month_latest_data
+    ]
     # [{'sales_count': 3, 'product': 1}, {'sales_count': 2, 'product': 2}, {'sales_count': 1, 'product': 3}]
 
     # 상위 5개 보여주기 위해서 개수
     count_top_sales = top_sales_month_latest_data.__len__()
 
+    products = Product.objects.values("id", "name_kor")
+    proudcts_id = [data["id"] for data in products]
+    # <QuerySet [{'id': 1, 'name_kor': '에어포스1 화이트'}]>
+
+    # Product 데이터를 가져와서 ID로 매핑
+    products = Product.objects.filter(id__in=top_sales_month_latest_data_pid).values(
+        "id", "name_kor"
+    )
+    product_dict = {product["id"]: product["name_kor"] for product in products}
+    # 상품 이름과 거래 개수를 결합
+    combined_data = [
+        {
+            "product_name": product_dict[data["product"]],
+            "sales_count": data["sales_count"],
+        }
+        for data in top_sales_month_latest_data
+    ]
+
+    # ====================================================================
     # 시간대별 가장 많이 팔린 제품
 
     return render(
@@ -204,6 +232,9 @@ def home(request):
             "curr_quarter": curr_quarter,
             "sales_percentage_change": sales_percentage_change,
             "count_top_sales": count_top_sales,
-            "top_sales_month_latest_data": top_sales_month_latest_data,
+            "top_sales_month": top_sales_month,
+            "products": products,
+            "top_sales_month_latest_data_count": top_sales_month_latest_data_count,
+            "combined_data": combined_data,
         },
     )
