@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade, Trade_Total
-from django.db.models import Sum, Case, When, IntegerField
+from django.db.models import Sum, Case, When, IntegerField, Count
 
 
 # Create your views here.
@@ -160,6 +160,33 @@ def home(request):
             sales_percentage_change
         ) = None
 
+    # 이번 달 가장 많이 팔린 제품
+
+    top_sales_month = (
+        Trade_Total.objects.values("trade_year", "trade_month", "product")
+        .annotate(sales_count=Count("*"))
+        .order_by("-sales_count")
+    )
+    # <QuerySet [{'trade_year': 2024, 'trade_month': 3, 'product': 1, 'sales_count': 2}]>
+
+    # 가장 최신 년도와 월 기준
+    top_sales_month_latest = [
+        data
+        for data in top_sales_month
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+
+    top_sales_month_latest_data = [
+        {"sales_count": data["sales_count"], "product": data["product"]}
+        for data in top_sales_month_latest
+    ]
+    # [{'sales_count': 3, 'product': 1}, {'sales_count': 2, 'product': 2}, {'sales_count': 1, 'product': 3}]
+
+    # 상위 5개 보여주기 위해서 개수
+    count_top_sales = top_sales_month_latest_data.__len__()
+
+    # 시간대별 가장 많이 팔린 제품
+
     return render(
         request,
         "kream/home.html",
@@ -176,5 +203,7 @@ def home(request):
             "curr_quarter_total_sales_data": curr_quarter_total_sales_data,
             "curr_quarter": curr_quarter,
             "sales_percentage_change": sales_percentage_change,
+            "count_top_sales": count_top_sales,
+            "top_sales_month_latest_data": top_sales_month_latest_data,
         },
     )
