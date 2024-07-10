@@ -29,8 +29,6 @@ def detail(request, pid, year):
 
     total_avg_data = [data["avg_sales"] for data in total_avg if data["product"] == pid]
 
-    all_trades = Trade.objects.filter(product=single_product)
-
     # ===============================================================================
 
     total_sum_year = Trade_Total.objects.values("product", "trade_year").annotate(
@@ -121,7 +119,6 @@ def detail(request, pid, year):
         {
             "product_list": product_list,
             "single_product": single_product,
-            "all_trades": all_trades,
             "current_year": year,
             "total_sum_data": total_sum_data[0],
             "total_avg_data": total_avg_data[0],
