@@ -555,4 +555,14 @@ def delete(request, cid):
 
 @login_required(login_url="common:login")
 def monthlyReport(request, year, month):
-    return render(request, "kream/monthlyReport.html")
+    # select option부분
+    options = (
+        Trade_Total.objects.values("trade_year", "trade_month")
+        .order_by("-trade_year", "-trade_month")
+        .distinct()
+    )
+    return render(
+        request,
+        "kream/monthlyReport.html",
+        {"month": month, "year": year, "options": options},
+    )
