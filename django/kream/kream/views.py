@@ -3,14 +3,14 @@ from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 import pandas as pd
-import numpy as np
-from PIL import Image, ImageOps
 
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import base64
 from collections import Counter
 from io import BytesIO
+
+from django.core.paginator import Paginator
 
 import matplotlib
 
@@ -492,9 +492,20 @@ def wordcloud(request, pid):
 
 @login_required(login_url="common:login")
 def monthList(request):
-    return render(request, "kream/monthList.html")
+    dates = (
+        Trade_Total.objects.values("trade_year", "trade_month")
+        .order_by("-trade_year", "-trade_month")
+        .distinct()
+    )
+
+    page = request.GET.get("page", 1)
+    date_list = dates
+    paginator = Paginator(date_list, 7)
+    page_obj = paginator.get_page(page)
+
+    return render(request, "kream/monthList.html", {"dates": page_obj})
 
 
 @login_required(login_url="common:login")
-def monthlyReport(request):
+def monthlyReport(request, year, month):
     return render(request, "kream/monthlyReport.html")

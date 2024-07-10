@@ -8,6 +8,6 @@ urlpatterns = [
     path("home/", views.home, name="home"),
     path("detail/<int:pid>/<int:year>/", views.detail, name="detail"),
     path("list/", views.list, name="list"),
-    path("monthly/", views.monthlyReport, name="monthlyReport"),
     path("monthList/", views.monthList, name="monthList"),
+    path("monthly/<int:year>/<int:month>/", views.monthlyReport, name="monthlyReport"),
 ]

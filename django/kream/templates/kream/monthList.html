@@ -41,20 +41,35 @@
                             <td class="px-4 py-2 border-bottom-0 text-end">상세보고 주소</td>
                           </thead>
 
+                          
                           {% comment %} 반복영역 {% endcomment %}
-                          <tr>
-                            <td class="px-4 border-top">
-                              <div class="d-flex align-items-center">
-                                Design Assets
-                              </div>
-                            </td>
-                            <td class="px-4 border-top">Only you</td>
-                            <td class="px-4 border-top text-end">2.4 GB</td>
-                          </tr>
-
+                          {% for date in dates %}
+                            <tr>
+                                <td class="px-4 border-top">
+                                <div class="d-flex align-items-center">
+                                    {{date.trade_year}}
+                                </div>
+                                </td>
+                                <td class="px-4 border-top">{{date.trade_month}}</td>
+                                <td class="px-4 border-top text-end">
+                                    <a href="{% url "kream:monthlyReport" date.trade_year date.trade_month %}">http://127.0.0.1:8000/kream/monthly/{{date.trade_year}}/{{date.trade_month}}/</a>
+                                </td>
+                            </tr>
+                          {% endfor %}
                         </tbody>
                       </table>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center mb-4 mt-3">
+                    {% if dates.has_previous %}
+                      <a class="btn btn-primary text-uppercase" href="?page={{dates.previous_page_number}}">← 이전 </a>
+                    {% endif %}
+          
+                    <a class="btn btn-primary text-uppercase" href="#">{{dates.number}}/{{dates.paginator.num_pages}}</a>
+          
+                    {% if dates.has_next %}
+                      <a class="btn btn-primary text-uppercase" href="?page={{dates.next_page_number}}"> 다음 →</a>
+                    {% endif %}
                   </div>
                   
                 </div>
@@ -78,7 +93,7 @@
                         </div>
                       </li> 
                     </ul>
-                    
+
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray">
                     <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="#!">
