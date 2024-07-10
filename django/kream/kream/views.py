@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product, Trade_Total
+from .models import Product, Trade_Total, Check_List
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 import pandas as pd
 
@@ -503,7 +503,20 @@ def monthList(request):
     paginator = Paginator(date_list, 7)
     page_obj = paginator.get_page(page)
 
-    return render(request, "kream/monthList.html", {"dates": page_obj})
+    # 체크리스트
+    check_list = Check_List.objects.all().order_by("-created_at")
+
+    return render(
+        request,
+        "kream/monthList.html",
+        {"dates": page_obj, "check_list": check_list[:5]},
+    )
+
+
+@login_required(login_url="common:login")
+def checkList(request):
+    check_list = Check_List.objects.all().order_by("-created_at")
+    return render(request, "kream/checkList.html", {"check_list": check_list})
 
 
 @login_required(login_url="common:login")

@@ -38,7 +38,7 @@
                           <thead class="text-xs font-monospace">
                             <td class="px-4 py-2 border-bottom-0">연도</td>
                             <td class="px-4 py-2 border-bottom-0">월</td>
-                            <td class="px-4 py-2 border-bottom-0 text-end">상세보고 주소</td>
+                            <td class="px-4 py-2 border-bottom-0 text-end">상세리포트 주소</td>
                           </thead>
 
                           
@@ -85,19 +85,21 @@
                     <!-- Clickable checklist-->
                     <ul class="list-group list-group-flush checklist">
                     {% comment %} 반복 영역 {% endcomment %}
-                      <li class="list-group-item list-group-item-action ps-2">
-                        <div class="d-flex align-items-center">
-                          <mwc-formfield class="pe-none" label="Newsletter draft">
-                            <mwc-checkbox checked="checked"></mwc-checkbox>
-                          </mwc-formfield>
-                        </div>
-                      </li> 
+                      {% for item in check_list %}
+                        <li class="list-group-item list-group-item-action ps-2">
+                          <div class="d-flex align-items-center">
+                            <mwc-formfield class="pe-none" label="">
+                              <mwc-checkbox checked="checked"></mwc-checkbox>
+                            </mwc-formfield>
+                            <a href="" class="ms-2">{{item.title}}</a>
+                          </div>
+                        </li> 
+                      {% endfor %}
                     </ul>
-
                   </div>
                   <div class="card-footer bg-transparent position-relative ripple-gray">
-                    <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="#!">
-                      <div class="fst-button">Manage Tasks</div>
+                    <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="{% url "kream:checkList" %}">
+                      <div class="fst-button">체크리스트 전체 목록</div>
                       <i class="material-icons icon-sm ms-1">chevron_right</i>
                     </a>
                   </div>

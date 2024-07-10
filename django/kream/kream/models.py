@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -17,21 +18,6 @@ class Product(models.Model):
         return self.name_kor
 
 
-# class Trade(models.Model):
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
-#     trade_year = models.IntegerField(default=0)
-#     trade_month = models.IntegerField(default=0)
-#     trade_size = models.CharField(max_length=10)
-#     total_sales = models.IntegerField(default=0)
-#     average_sales = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
-#     monthly_sales = models.IntegerField(default=0)
-#     yearly_sales = models.IntegerField(default=0)
-#     size_sales = models.IntegerField(default=0)
-
-#     def __str__(self) -> str:
-#         return self.product.name_kor
-
-
 class Trade_Total(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     trade_size = models.CharField(max_length=10)
@@ -42,3 +28,15 @@ class Trade_Total(models.Model):
 
     def __str__(self) -> str:
         return self.product.name_kor
+
+
+class Check_List(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, default="default_title")
+    content = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    is_completed = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return "%s - %s" % (self.id, self.user)

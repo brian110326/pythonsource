@@ -10,4 +10,5 @@ urlpatterns = [
     path("list/", views.list, name="list"),
     path("monthList/", views.monthList, name="monthList"),
     path("monthly/<int:year>/<int:month>/", views.monthlyReport, name="monthlyReport"),
+    path("checkList/", views.checkList, name="checkList"),
 ]
