@@ -21,10 +21,16 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500" rel="stylesheet"/>
     <!-- Load main stylesheet-->
     <link href="{% static "css/styles.css" %}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud/dist/echarts-wordcloud.min.js"></script>
+    <script src="{% static "js/echarts.min.js" %}"></script>
+    <script src="{% static "js/echarts-wordcloud.min.js" %}"></script>
     {% block css %}{% endblock css %}
   </head>
 
   <!-- Main Content-->
   {% block content %}{% endblock content %}
+
+  {% block script %}{% endblock script %}
 
 </html>

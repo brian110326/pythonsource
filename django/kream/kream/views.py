@@ -1,7 +1,16 @@
-from django.shortcuts import render, get_object_or_404, redirect, resolve_url
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
+import pandas as pd
+
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import base64
+from collections import Counter
+from io import BytesIO
+
+# import koreanize_matplotlib
 
 
 # Create your views here.
@@ -22,12 +31,25 @@ def detail(request, pid, year):
         data["total_sales"] for data in total_sum if data["product"] == pid
     ]
 
+    filtered_total_sum_data = 0
+    filtered_total_avg_data = 0
+
+    if total_sum_data:
+        filtered_total_sum_data = total_sum_data[0]
+    else:
+        total_sum_data = 0
+
     total_avg = Trade_Total.objects.values("product").annotate(
         avg_sales=Avg("trade_price")
     )
     # <QuerySet [{'product': 1, 'total_sales': 663678}, {'product': 2, 'total_sales': 718412}, {'product': 3, 'total_sales': 9341}]>
 
     total_avg_data = [data["avg_sales"] for data in total_avg if data["product"] == pid]
+
+    if total_avg_data:
+        filtered_total_avg_data = total_avg_data[0]
+    else:
+        total_avg_data = 0
 
     # ===============================================================================
 
@@ -39,13 +61,18 @@ def detail(request, pid, year):
         data["total_sales"]
         for data in total_sum_year
         if data["trade_year"] == year and data["product"] == pid
-    ][0]
+    ]
 
     total_sum_data_prev_year = [
         data["total_sales"]
         for data in total_sum_year
         if data["trade_year"] == year - 1 and data["product"] == pid
     ]
+
+    if total_sum_data_curr_year:
+        total_sum_data_curr_year = total_sum_data_curr_year[0]
+    else:
+        total_sum_data_curr_year = 0
 
     if total_sum_data_prev_year:
         total_sum_data_prev_year = total_sum_data_prev_year[0]
@@ -120,8 +147,8 @@ def detail(request, pid, year):
             "product_list": product_list,
             "single_product": single_product,
             "current_year": year,
-            "total_sum_data": total_sum_data[0],
-            "total_avg_data": total_avg_data[0],
+            "total_sum_data": filtered_total_sum_data,
+            "total_avg_data": filtered_total_avg_data,
             "year": year,
             "total_sum_data_curr_year": total_sum_data_curr_year,
             "total_sum_data_prev_year": total_sum_data_prev_year,
@@ -378,4 +405,51 @@ def home(request):
             "top_time": top_time[:10],
             "latest_month_per_year_len": latest_month_per_year.__len__(),
         },
+    )
+
+
+def draw_wordclouds(topic_words):
+    wordcloud = WordCloud(
+        width=800, height=400, background_color="white", font_path="C:/NanumGothic.ttf"
+    ).generate_from_frequencies(topic_words)
+
+    # plt.figure(figsize=(10, 10))
+    plt.imshow(wordcloud, interpolation="bilinear")
+
+    plt.axis("off")
+
+    # 이미지를 BytesIO에 저장
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
+
+    # 이미지를 base64로 인코딩
+    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    return image_base64
+
+
+@login_required(login_url="common:login")
+def wordcloud(request, pid):
+    df = pd.read_excel(
+        "C:\\source\\pythonsource\\kream_project\\clean_data\\trade_noun.xlsx"
+    )
+
+    product = get_object_or_404(Product, id=pid)
+
+    model_no = product.model_no
+
+    product_data = df[df["Model_No"] == model_no]
+
+    words = product_data["Social_Text"].dropna().to_list()
+
+    wordcloud_image = None
+
+    if words:
+        word_counts = Counter(" ".join(words).split())
+        wordcloud_image = draw_wordclouds(word_counts)
+
+    return render(
+        request,
+        "kream/wordcloud.html",
+        {"wordcloud_image": wordcloud_image, "product": product},
     )
