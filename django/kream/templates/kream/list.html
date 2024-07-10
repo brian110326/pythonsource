@@ -21,8 +21,8 @@
             <div class="container-xl p-5">
               <div class="row align-items-center justify-content-between">
                 <div class="col-12 col-md mb-4 mb-md-0">
-                  <h1 class="mb-1 display-4 fw-500 text-white">Welcome back, Robert!</h1>
-                  <p class="lead mb-0 text-white">Your dashboard is ready to go!</p>
+                  <h1 class="mb-1 display-4 fw-500 text-white">전체 상품 목록</h1>
+                  <p class="lead mb-0 text-white">상세정보를 확인하세요</p>
                 </div>
                 <div class="col-12 col-md-auto flex-shrink-0">
                   {% comment %} <label class="form-label text-white-50" for="litepickerDateRange">Date range:</label> {% endcomment %}
@@ -32,53 +32,7 @@
             </div>
           </header>
           <div class="container-xl p-5">
-            <div class="row gx-5">
-              <div class="col-lg-4 col-md-6 mb-5">
-                <div class="card card-raised border-start border-4 border-primary">
-                  <div class="card-body px-4">
-                    <div class="overline text-muted mb-1">Gross Revenue</div>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <div class="display-6 me-3">$32,502.00</div>
-                      <div class="d-flex align-items-center text-success">
-                        <i class="material-icons icon-sm me-2">trending_up</i>
-                        <div class="display-6 text-success fw-normal">24%</div>
-                      </div>
-                    </div>
-                    <div class="text-xs text-muted mb-1">Previous year: $46,018.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 mb-5">
-                <div class="card card-raised border-start border-4 border-secondary">
-                  <div class="card-body px-4">
-                    <div class="overline text-muted mb-1">Refunds</div>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <div class="display-6 me-3">$0.00</div>
-                      <div class="d-flex align-items-center text-muted">
-                        <i class="material-icons icon-sm me-2">trending_flat</i>
-                        <div class="display-6 text-muted fw-normal">0%</div>
-                      </div>
-                    </div>
-                    <div class="text-xs text-muted mb-1">Previous year: $0.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-6 mb-5">
-                <div class="card card-raised border-start border-4 border-info">
-                  <div class="card-body px-4">
-                    <div class="overline text-muted mb-1">Coupons</div>
-                    <div class="d-flex align-items-center justify-content-between">
-                      <div class="display-6 me-3">$10.00</div>
-                      <div class="d-flex align-items-center text-danger">
-                        <i class="material-icons icon-sm me-2">trending_down</i>
-                        <div class="display-6 text-danger fw-normal">10%</div>
-                      </div>
-                    </div>
-                    <div class="text-xs text-muted mb-1">Previous year: $50.00</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
             <div class="card card-raised mb-5">
               <div class="card-header bg-transparent px-4">
                 <div class="d-flex justify-content-between align-items-center">
@@ -108,7 +62,7 @@
                         {% for data in latest_year_per_product|slice:":1" %}
                             <tr id="productDetail">
                                 <td>{{product.brand}}</td>
-                                <td><a href="{% url "kream:detail" product.id data.max_year %}" data-year="{{trade.trade_year}}" id="url" data-pid="{{product.id}}">{{product.name_kor}}</a></td>
+                                <td><a href="{% url "kream:detail" product.id data.max_year %}" data-year="{{trade.trade_year}}" id="url" data-pid="{{product.id}}" style="display: inline-block; width: 150px;">{{product.name_kor}}</a></td>
                                 <td>{{product.model_no}}</td>
                                 <td>{{product.original_price}}원</td>
                                 <td><a href="{{product.product_detail_url}}">{{product.product_detail_url}}</a></td>

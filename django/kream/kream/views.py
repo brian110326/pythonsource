@@ -310,6 +310,8 @@ def home(request):
         {"sales_count": data["sales_count"], "product": data["product"]}
         for data in top_sales_month_latest
     ]
+
+    # 개수가 10개가 안된다면 오류날 가능성 존재
     top_sales_month_latest_data = top_sales_month_latest_data[:10]
 
     top_sales_month_latest_data_pid = [
@@ -373,7 +375,7 @@ def home(request):
             "top_sales_month_latest_data_count": top_sales_month_latest_data_count,
             "combined_data": combined_data,
             # ==============================================================
-            "top_time": top_time,
+            "top_time": top_time[:10],
             "latest_month_per_year_len": latest_month_per_year.__len__(),
         },
     )
