@@ -86,14 +86,16 @@
                     <ul class="list-group list-group-flush checklist">
                     {% comment %} 반복 영역 {% endcomment %}
                       {% for item in check_list %}
-                        <li class="list-group-item list-group-item-action ps-2">
-                          <div class="d-flex align-items-center">
-                            <mwc-formfield class="pe-none" label="">
-                              <mwc-checkbox checked="checked"></mwc-checkbox>
-                            </mwc-formfield>
-                            <a href="" class="ms-2">{{item.title}}</a>
-                          </div>
-                        </li> 
+                        {% if item.is_completed == False %}
+                          <li class="list-group-item list-group-item-action ps-2">
+                            <div class="d-flex align-items-center">
+                              No.{{item.id}} :
+                              <mwc-formfield class="pe-none" label="">
+                              </mwc-formfield>
+                              <a href="{% url "kream:checkListDetail" item.id %}" class="ms-2" id="title">{{item.title}}</a>
+                            </div>
+                          </li> 
+                        {% endif %}
                       {% endfor %}
                     </ul>
                   </div>
@@ -122,7 +124,5 @@
     <script type="module" src="{% static "js/material.js" %}"></script>
     <script src="{% static "js/scripts.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
-    <!-- Load Custom Checkbox Script-->
-    <script src="{% static "js/widgets/checklist.js" %}"></script>
   </body>
 {% endblock content %}

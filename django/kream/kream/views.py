@@ -1,8 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total, Check_List
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 import pandas as pd
+
 
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
@@ -509,7 +510,7 @@ def monthList(request):
     return render(
         request,
         "kream/monthList.html",
-        {"dates": page_obj, "check_list": check_list[:5]},
+        {"dates": page_obj, "check_list": check_list[:10]},
     )
 
 
@@ -517,6 +518,39 @@ def monthList(request):
 def checkList(request):
     check_list = Check_List.objects.all().order_by("-created_at")
     return render(request, "kream/checkList.html", {"check_list": check_list})
+
+
+@login_required(login_url="common:login")
+def checkListDetail(request, cid):
+    record = get_object_or_404(Check_List, id=cid)
+    return render(request, "kream/checkListDetail.html", {"record": record})
+
+
+@login_required(login_url="common:login")
+def modify(request, cid):
+    record = get_object_or_404(Check_List, id=cid)
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        completed = request.POST.get("completed")
+
+        record.user = request.user
+        record.title = title
+        record.content = content
+        record.is_completed = completed
+
+        record.save()
+
+        return redirect("kream:checkListDetail", cid)
+
+    return render(request, "kream/checkListModify.html", {"record": record})
+
+
+@login_required(login_url="common:login")
+def delete(request, cid):
+    record = get_object_or_404(Check_List, id=cid)
+    record.delete()
+    return redirect("kream:checkList")
 
 
 @login_required(login_url="common:login")

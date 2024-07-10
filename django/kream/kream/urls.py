@@ -11,4 +11,7 @@ urlpatterns = [
     path("monthList/", views.monthList, name="monthList"),
     path("monthly/<int:year>/<int:month>/", views.monthlyReport, name="monthlyReport"),
     path("checkList/", views.checkList, name="checkList"),
+    path("checkListDetail/<int:cid>/", views.checkListDetail, name="checkListDetail"),
+    path("checkListDetail/modify/<int:cid>/", views.modify, name="modify"),
+    path("checkListDetail/delete/<int:cid>/", views.delete, name="delete"),
 ]
