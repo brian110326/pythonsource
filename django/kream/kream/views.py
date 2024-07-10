@@ -3,12 +3,18 @@ from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
 import pandas as pd
+import numpy as np
+from PIL import Image, ImageOps
 
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import base64
 from collections import Counter
 from io import BytesIO
+
+import matplotlib
+
+matplotlib.use("Agg")
 
 # import koreanize_matplotlib
 
@@ -140,6 +146,25 @@ def detail(request, pid, year):
         if data["trade_year"] == year and data["product"] == pid
     ]
 
+    # 워드 클라우드
+    df = pd.read_excel(
+        "C:\\source\\pythonsource\\kream_project\\clean_data\\trade_noun.xlsx"
+    )
+
+    product = get_object_or_404(Product, id=pid)
+
+    model_no = product.model_no
+
+    product_data = df[df["Model_No"] == model_no]
+
+    words = product_data["Social_Text"].dropna().to_list()
+
+    wordcloud_image = None
+
+    if words:
+        word_counts = Counter(" ".join(words).split())
+        wordcloud_image = draw_wordclouds(word_counts)
+
     return render(
         request,
         "kream/detail.html",
@@ -160,6 +185,7 @@ def detail(request, pid, year):
             "pid": pid,
             "size_list": size_list,
             "size_sales": size_sales,
+            "wordcloud_image": wordcloud_image,
         },
     )
 
@@ -408,19 +434,28 @@ def home(request):
     )
 
 
+# 워드클라우드 제작 함수
 def draw_wordclouds(topic_words):
+
     wordcloud = WordCloud(
-        width=800, height=400, background_color="white", font_path="C:/NanumGothic.ttf"
+        width=1200,
+        height=400,
+        background_color=None,  # 배경을 투명하게 설정
+        mode="RGBA",
+        font_path="C:/NanumGothic.ttf",
+        contour_width=0,
+        contour_color=None,
+        random_state=42,
     ).generate_from_frequencies(topic_words)
 
-    # plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(14, 10))
     plt.imshow(wordcloud, interpolation="bilinear")
 
     plt.axis("off")
 
     # 이미지를 BytesIO에 저장
     buffer = BytesIO()
-    plt.savefig(buffer, format="png")
+    plt.savefig(buffer, format="png", bbox_inches="tight")
     buffer.seek(0)
 
     # 이미지를 base64로 인코딩
