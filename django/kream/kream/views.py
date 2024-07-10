@@ -488,3 +488,13 @@ def wordcloud(request, pid):
         "kream/wordcloud.html",
         {"wordcloud_image": wordcloud_image, "product": product},
     )
+
+
+@login_required(login_url="common:login")
+def monthList(request):
+    return render(request, "kream/monthList.html")
+
+
+@login_required(login_url="common:login")
+def monthlyReport(request):
+    return render(request, "kream/monthlyReport.html")

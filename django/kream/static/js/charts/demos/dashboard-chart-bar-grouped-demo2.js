@@ -1,24 +1,24 @@
-const monthList = document.querySelector("#monthList");
-
-month_array1 = monthList.getAttribute("data-month");
-data_array1 = monthList.getAttribute("data-sales");
-
-month_array = JSON.parse(month_array1);
-data_array = JSON.parse(data_array1);
-
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {
-  type: "line",
+  type: "bar",
   data: {
-    labels: month_array,
+    labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
       {
-        label: "총판매가격",
-        backgroundColor: "rgba(75, 192, 192, 0.2)", // Replace with your color variable
-        borderColor: "rgba(75, 192, 192, 1)", // Replace with your color variable
+        label: "Last Year",
+        backgroundColor: primaryColorOpacity50,
+        borderColor: primaryColorOpacity50,
         borderRadius: 4,
         maxBarThickness: 32,
-        data: data_array,
+        data: [4853, 12395, 22495, 29876, 44535, 54984],
+      },
+      {
+        label: "This Year",
+        backgroundColor: primaryColor,
+        borderColor: primaryColor,
+        borderRadius: 4,
+        maxBarThickness: 32,
+        data: [9831, 17498, 27337, 34897, 49897, 59482],
       },
     ],
   },
