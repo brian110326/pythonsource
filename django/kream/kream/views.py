@@ -659,8 +659,15 @@ def monthlyReport(request, year, month):
         and data["product"] in top_products_data_pid
     ]
 
+    # 1월인 경우 이전달은 작년 12월
     if not top_products_data_last_year:
-        top_products_data_last_year = None
+        top_products_data_last_year = [
+            data["total_sales"]
+            for data in top_products
+            if data["trade_year"] == year - 1
+            and data["trade_month"] == 12
+            and data["product"] in top_products_data_pid
+        ]
 
     # 특정 월의 특정 시간대
     total_sales_per_time = (
