@@ -561,8 +561,80 @@ def monthlyReport(request, year, month):
         .order_by("-trade_year", "-trade_month")
         .distinct()
     )
+
+    # 총 매출액
+    total_sales = Trade_Total.objects.values("trade_year", "trade_month").annotate(
+        total_sales=Sum("trade_price")
+    )
+
+    total_sales_data = [
+        data["total_sales"]
+        for data in total_sales
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+
+    if total_sales_data:
+        total_sales_data = total_sales_data[0]
+    else:
+        total_sales_data = 0
+
+    # 평균 매출액
+    avg_sales = Trade_Total.objects.values("trade_year", "trade_month").annotate(
+        avg_sales=Avg("trade_price")
+    )
+
+    avg_sales_data = [
+        data["avg_sales"]
+        for data in avg_sales
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+
+    if avg_sales_data:
+        avg_sales_data = avg_sales_data[0]
+    else:
+        avg_sales_data = 0
+
+    # 해당년도 매출액 차지비율
+    # 월매출액 / 해당년도 매출액 * 100
+    # 해당년도 매출액
+    total_sales_year = Trade_Total.objects.values("trade_year").annotate(
+        total_sales=Sum("trade_price")
+    )
+
+    total_sales_year_data = [
+        data["total_sales"] for data in total_sales_year if data["trade_year"] == year
+    ]
+
+    if total_sales_year_data:
+        total_sales_year_data = total_sales_year_data[0]
+    else:
+        total_sales_year_data = 0
+
+    proportion = (total_sales_data / total_sales_year_data) * 100
+
+    # bar chart : 해당 월 top 상품들
+    top_products = (
+        Trade_Total.objects.values("trade_year", "trade_month", "product")
+        .annotate(total_sales=Sum("trade_price"))
+        .order_by("-total_sales")
+    )
+
+    top_products_data = [
+        data
+        for data in top_products
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+
     return render(
         request,
         "kream/monthlyReport.html",
-        {"month": month, "year": year, "options": options},
+        {
+            "month": month,
+            "year": year,
+            "options": options,
+            "total_sales_data": total_sales_data,
+            "avg_sales_data": avg_sales_data,
+            "proportion": proportion,
+            "top_products_data": top_products_data[:5],
+        },
     )
