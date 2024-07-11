@@ -649,6 +649,22 @@ def monthlyReport(request, year, month):
     if not top_products_data_last_year:
         top_products_data_last_year = None
 
+    # 특정 월의 특정 시간대
+    total_sales_per_time = (
+        Trade_Total.objects.values("trade_year", "trade_month", "trade_hour")
+        .annotate(total_sales=Sum("trade_price"))
+        .order_by("-total_sales")
+    )
+
+    total_sales_per_time_data = [
+        data
+        for data in total_sales_per_time
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+
+    time_list = [data["trade_hour"] for data in total_sales_per_time_data[:5]]
+    sales_list = [data["total_sales"] for data in total_sales_per_time_data[:5]]
+
     return render(
         request,
         "kream/monthlyReport.html",
@@ -663,5 +679,8 @@ def monthlyReport(request, year, month):
             "top_products_data_sales": top_products_data_sales,
             "ordered_product_names": ordered_product_names,
             "top_products_data_last_year": top_products_data_last_year,
+            "total_sales_per_time_data": total_sales_per_time_data[:5],
+            "time_list": time_list,
+            "sales_list": sales_list,
         },
     )

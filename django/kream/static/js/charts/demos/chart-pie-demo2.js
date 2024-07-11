@@ -1,13 +1,26 @@
+const tag = document.querySelector("#time");
+time_array = JSON.parse(tag.getAttribute("data-time"));
+sales_array = JSON.parse(tag.getAttribute("data-sales"));
+
 var ctx = document.getElementById("myPieChart").getContext("2d");
 var myPieChart = new Chart(ctx, {
-  type: "pie",
+  type: "bar",
   data: {
-    labels: ["Alpha", "Beta", "Gamma", "Delta"],
+    labels: time_array,
     datasets: [
       {
-        data: [27.21, 15.58, 11.25, 8.32],
+        data: sales_array,
+        label: "시간",
         backgroundColor: [primaryColor, infoColor, secondaryColor, warningColor],
       },
     ],
+  },
+  options: {
+    indexAxis: "y",
+    plugins: {
+      legend: {
+        display: true, // 범례 숨기기
+      },
+    },
   },
 });
