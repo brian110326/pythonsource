@@ -2,20 +2,14 @@
 {% load static %}
 {% block content %}
   <body class="nav-fixed bg-light">
-    <!-- Top app bar navigation menu-->
+    
     {% include "header.html" %}
-    <!-- Layout wrapper-->
     <div id="layoutDrawer">
-      <!-- Layout navigation-->
       <div id="layoutDrawer_nav">
-        <!-- Drawer navigation-->
         {% include "sidebar.html" %}
       </div>
-      <!-- Layout content-->
-      <div id="layoutDrawer_content">
-        <!-- Main page content-->
+      <div id="layoutDrawer_content">    
         <main>
-          <!-- Main dashboard content-->
           <div class="container-xl p-5">
             <div class="row justify-content-between align-items-center mb-5">
               <div class="col flex-shrink-0 mb-5 mb-md-0">
@@ -36,7 +30,6 @@
               </div>
             </div>
             
-            <!-- Colored status cards -->
             <div class="row gx-5">
               <div class="col-xxl-3 col-md-6 mb-5">
                 <div class="card card-raised border-start border-primary border-4 w-78">
@@ -55,10 +48,8 @@
               </div>   
             </div>
             
-
             <div id="chartContainer">
               <div class="row gx-5">
-                <!-- Revenue breakdown chart example-->
                 <div class="col-lg-8 mb-5">
                   <div class="card card-raised h-100">
                     <div class="card-header bg-primary text-white px-4">
@@ -77,14 +68,12 @@
                         <div class="col-12 col-xxl-2">
                           <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                             <div class="mb-4 text-center text-md-start">
-                              
                               <div class="text-xl font-monospace text-muted mb-1">총 판매금액</div>
                               <div class="display-6 fw-400" id="totalSale">{{total_sum_data}}</div>                            
                             </div>
                             <div class="mb-4 text-center text-md-start">
                               <div class="text-xl font-monospace text-muted mb-1">평균 판매금액</div>
                               <div class="display-6 fw-400" id="avgSale">{{total_avg_data}}</div>
-                              
                             </div>
                             <div class="mb-4 text-center text-md-start">
                               <div class="text-xl font-monospace text-muted mb-1" id="increaseText">지난해 대비 판매금액 증감비율</div>
@@ -97,10 +86,9 @@
                         </div>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
-                <!-- Segments pie chart example-->
+                
                 <div class="col-lg-4 mb-5">
                   <div class="card card-raised h-100">
                     <div class="card-header bg-primary text-white px-4">
@@ -119,7 +107,6 @@
                         </div>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
               </div>
@@ -142,7 +129,6 @@
               </div>
             </div>
             <div class="row gx-5">
-              <!-- Privacy suggestions illustrated card-->
               <div class="col-xl-6 mb-5">
                 <div class="card card-raised h-100">
                   <div class="card-body p-4">
@@ -159,7 +145,6 @@
                   </div>
                 </div>
               </div>
-              <!-- Account storage illustrated card-->
               <div class="col-xl-6 mb-5">
                 <div class="card card-raised h-100">
                   <div class="card-body p-4">
@@ -183,12 +168,10 @@
                   <div class="me-4">
                     <h2 class="card-title text-white mb-0">해당 년도 상품 목록</h2>
                     <div class="card-subtitle">상세정보</div>
-                  </div>
-                  
+                  </div> 
                 </div>
               </div>
               <div class="card-body p-4">
-                <!-- Simple DataTables example-->
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
@@ -216,8 +199,6 @@
             </div>
           </div>
         </main>
-        <!-- Footer-->
-        <!-- Min-height is set inline to match the height of the drawer footer-->
         {% include "footer.html" %}
       </div>
     </div>
@@ -232,27 +213,19 @@
     <input type="hidden" name="" data-month="{{month_list_data_month}}" data-sales="{{month_list_data_sales}}" id="monthList">
     <input type="hidden" name="" data-sizeList="{{size_list}}" data-sales="{{size_sales}}" id="sizeChart">
 
-    <!-- Load Bootstrap JS bundle-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <!-- Load global scripts-->
     <script src="{% static "js/material.js" %}"></script>
     <script src="{% static "js/scripts.js" %}"></script>
-    <!-- Load Chart.js via CDN-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.2/chart.min.js" crossorigin="anonymous"></script>
-    <!-- Load Chart.js customized defaults-->
     <script src="{% static "js/charts/chart-defaults.js" %}"></script>
-    <!-- Load chart demos for this page-->
     <script src="{% static "js/charts/demos/chart-pie-demo.js" %}"></script>
     <script src="{% static "js/charts/demos/dashboard-chart-bar-grouped-demo.js" %}"></script>
-    <!-- Load Simple DataTables Scripts-->
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-
     <script src="{% static "js/datatables/datatables-simple-demo.js" %}"></script>
     <script src="{% static "js/base.js" %}"></script>
     <script src="{% static "js/detail.js" %}"></script>
     <script src="{% static "js/digit.js" %}"></script>
     <script src="{% static "js/wordcloud.js" %}"></script>
-
     <script src="{% static "js/html2canvas.js" %}"></script>
     <script src="{% static "js/jspdf.min.js" %}"></script>
     <script src="{% static "js/pdf2.js" %}"></script>
