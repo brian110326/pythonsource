@@ -38,5 +38,8 @@ class Check_List(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     is_completed = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["-created_at"]
+
     def __str__(self) -> str:
-        return "%s - %s" % (self.id, self.user)
+        return self.title

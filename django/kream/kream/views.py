@@ -547,6 +547,19 @@ def modify(request, cid):
 
 
 @login_required(login_url="common:login")
+def create(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+
+        Check_List.objects.create(title=title, content=content, user=request.user)
+
+        return redirect("kream:checkList")
+
+    return render(request, "kream/checkListCreate.html")
+
+
+@login_required(login_url="common:login")
 def delete(request, cid):
     record = get_object_or_404(Check_List, id=cid)
     record.delete()
