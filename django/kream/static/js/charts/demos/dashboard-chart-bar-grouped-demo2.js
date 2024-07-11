@@ -6,7 +6,6 @@ sales_list = JSON.parse(sales_array);
 const name_Str = name_array.replace(/'(?=[0-9]|[a-zA-Z])+/, "");
 const name_list = name_Str.replace(/'/g, '"');
 const name_ = JSON.parse(name_list);
-console.log(name, typeof name);
 
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {
