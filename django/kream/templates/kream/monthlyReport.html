@@ -163,7 +163,7 @@
                         </div>
                       </div>
                       <div class="col-12 col-xxl-10">
-                        <canvas id="dashboardBarChart"></canvas>
+                        <canvas id="dashboardBarChart" width="400" height="300"></canvas>
                       </div>
                     </div>
                   </div>
@@ -321,7 +321,7 @@
       {% csrf_token %}
     </form>
 
-    <input type="hidden" name="" id="barChart" data-pname="{{ordered_product_names}}" data-sales="{{top_products_data_sales}}">
+    <input type="hidden" name="" id="barChart" data-lastsales="{{top_products_data_last_year}}" data-pname="{{ordered_product_names}}" data-sales="{{top_products_data_sales}}">
     <!-- Load Bootstrap JS bundle-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- Load global scripts-->

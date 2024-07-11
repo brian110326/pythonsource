@@ -7,6 +7,10 @@ const name_Str = name_array.replace(/'(?=[0-9]|[a-zA-Z])+/, "");
 const name_list = name_Str.replace(/'/g, '"');
 const name_ = JSON.parse(name_list);
 
+// 저번달 똑같은 상품 매출액
+sales_array_last = barChart.getAttribute("data-lastsales");
+sales_list_last = JSON.parse(sales_array_last);
+
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {
   type: "bar",
@@ -14,9 +18,17 @@ var myBarChart = new Chart(ctx, {
     labels: name_,
     datasets: [
       {
-        label: "매출액",
+        label: "전월 매출액",
         backgroundColor: primaryColorOpacity50,
         borderColor: primaryColorOpacity50,
+        borderRadius: 4,
+        maxBarThickness: 32,
+        data: sales_list_last,
+      },
+      {
+        label: "현월 매출액",
+        backgroundColor: primaryColor,
+        borderColor: primaryColor,
         borderRadius: 4,
         maxBarThickness: 32,
         data: sales_list,
@@ -30,7 +42,7 @@ var myBarChart = new Chart(ctx, {
           unit: "month",
         },
         gridLines: {
-          display: false,
+          display: true,
         },
         ticks: {
           maxTicksLimit: 12,
@@ -49,7 +61,7 @@ var myBarChart = new Chart(ctx, {
     },
     plugins: {
       legend: {
-        display: false,
+        display: true,
       },
       tooltip: {
         displayColors: true,

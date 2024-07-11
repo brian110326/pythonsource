@@ -637,6 +637,18 @@ def monthlyReport(request, year, month):
 
     ordered_product_names = [products_dict[pid] for pid in top_products_data_pid]
 
+    # 같은 제품들 중 작년것들
+    top_products_data_last_year = [
+        data["total_sales"]
+        for data in top_products
+        if data["trade_year"] == year
+        and data["trade_month"] == month - 1
+        and data["product"] in top_products_data_pid
+    ]
+
+    if not top_products_data_last_year:
+        top_products_data_last_year = None
+
     return render(
         request,
         "kream/monthlyReport.html",
@@ -650,5 +662,6 @@ def monthlyReport(request, year, month):
             "top_products_data": top_products_data,
             "top_products_data_sales": top_products_data_sales,
             "ordered_product_names": ordered_product_names,
+            "top_products_data_last_year": top_products_data_last_year,
         },
     )
