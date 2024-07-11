@@ -148,7 +148,7 @@
                       <div class="col-12 col-xxl-2">
                         <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                           <div class="mb-4 text-center text-md-start">
-                            {{top_products_data}}
+
                             <div class="text-xs mb-1">{{month}}월 총매출액</div>
                             <div class="display-6 fw-500" id="total_sales_data">{{total_sales_data}}</div>
                           </div>
@@ -166,12 +166,6 @@
                         <canvas id="dashboardBarChart"></canvas>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-footer bg-transparent position-relative ripple-gray">
-                    <a class="d-flex align-items-center justify-content-end text-decoration-none stretched-link text-primary" href="#!">
-                      <div class="fst-button">Open Report</div>
-                      <i class="material-icons icon-sm ms-1">chevron_right</i>
-                    </a>
                   </div>
                 </div>
               </div>
@@ -326,6 +320,8 @@
     <form action="{% url "common:logout" %}" method="post" id="logoutForm">
       {% csrf_token %}
     </form>
+
+    <input type="hidden" name="" id="barChart" data-pname="{{ordered_product_names}}" data-sales="{{top_products_data_sales}}">
     <!-- Load Bootstrap JS bundle-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <!-- Load global scripts-->

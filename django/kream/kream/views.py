@@ -616,14 +616,26 @@ def monthlyReport(request, year, month):
     top_products = (
         Trade_Total.objects.values("trade_year", "trade_month", "product")
         .annotate(total_sales=Sum("trade_price"))
-        .order_by("-total_sales")
+        .order_by("total_sales")
     )
 
     top_products_data = [
         data
         for data in top_products
         if data["trade_year"] == year and data["trade_month"] == month
-    ]
+    ][-5:]
+
+    top_products_data_sales = [data["total_sales"] for data in top_products_data]
+
+    top_products_data_pid = [data["product"] for data in top_products_data]
+
+    products = Product.objects.filter(id__in=top_products_data_pid).values(
+        "id", "name_kor"
+    )
+
+    products_dict = {product["id"]: product["name_kor"] for product in products}
+
+    ordered_product_names = [products_dict[pid] for pid in top_products_data_pid]
 
     return render(
         request,
@@ -635,6 +647,8 @@ def monthlyReport(request, year, month):
             "total_sales_data": total_sales_data,
             "avg_sales_data": avg_sales_data,
             "proportion": proportion,
-            "top_products_data": top_products_data[:5],
+            "top_products_data": top_products_data,
+            "top_products_data_sales": top_products_data_sales,
+            "ordered_product_names": ordered_product_names,
         },
     )

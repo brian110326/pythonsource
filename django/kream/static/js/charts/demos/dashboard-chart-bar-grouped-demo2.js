@@ -1,24 +1,26 @@
+const barChart = document.querySelector("#barChart");
+name_array = barChart.getAttribute("data-pName");
+sales_array = barChart.getAttribute("data-sales");
+sales_list = JSON.parse(sales_array);
+
+const name_Str = name_array.replace(/'(?=[0-9]|[a-zA-Z])+/, "");
+const name_list = name_Str.replace(/'/g, '"');
+const name_ = JSON.parse(name_list);
+console.log(name, typeof name);
+
 var ctx = document.getElementById("dashboardBarChart").getContext("2d");
 var myBarChart = new Chart(ctx, {
   type: "bar",
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: name_,
     datasets: [
       {
-        label: "Last Year",
+        label: "매출액",
         backgroundColor: primaryColorOpacity50,
         borderColor: primaryColorOpacity50,
         borderRadius: 4,
         maxBarThickness: 32,
-        data: [4853, 12395, 22495, 29876, 44535, 54984],
-      },
-      {
-        label: "This Year",
-        backgroundColor: primaryColor,
-        borderColor: primaryColor,
-        borderRadius: 4,
-        maxBarThickness: 32,
-        data: [9831, 17498, 27337, 34897, 49897, 59482],
+        data: sales_list,
       },
     ],
   },
