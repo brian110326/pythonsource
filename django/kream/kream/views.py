@@ -678,6 +678,18 @@ def monthlyReport(request, year, month):
     time_list = [data["trade_hour"] for data in total_sales_per_time_data[:5]]
     sales_list = [data["total_sales"] for data in total_sales_per_time_data[:5]]
 
+    # 해당 월 상품 목록
+    products_inDate = Trade_Total.objects.values(
+        "trade_year", "trade_month", "product"
+    ).distinct()
+
+    pid_list = [
+        data["product"]
+        for data in products_inDate
+        if data["trade_year"] == year and data["trade_month"] == month
+    ]
+    p = Product.objects.filter(id__in=pid_list)
+
     return render(
         request,
         "kream/monthlyReport.html",
@@ -695,5 +707,6 @@ def monthlyReport(request, year, month):
             "total_sales_per_time_data": total_sales_per_time_data[:5],
             "time_list": time_list,
             "sales_list": sales_list,
+            "products": p,
         },
     )

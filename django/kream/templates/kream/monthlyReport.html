@@ -233,17 +233,11 @@
               <div class="card-header bg-transparent px-4">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="me-4">
-                    <h2 class="card-title mb-0">Orders</h2>
-                    <div class="card-subtitle">Details and history</div>
+                    <h2 class="card-title mb-0">{{year}}년
+                      {{month}}월 거래내역 상품 목록</h2>
+                    <div class="card-subtitle"></div>
                   </div>
-                  <div class="d-flex gap-2">
-                    <button class="btn btn-lg btn-text-primary btn-icon" type="button">
-                      <i class="material-icons">download</i>
-                    </button>
-                    <button class="btn btn-lg btn-text-primary btn-icon" type="button">
-                      <i class="material-icons">print</i>
-                    </button>
-                  </div>
+
                 </div>
               </div>
               <div class="card-body p-4">
@@ -251,29 +245,27 @@
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Ext.</th>
-                      <th>City</th>
-                      <th data-type="date" data-format="YYYY/MM/DD">Start Date</th>
-                      <th>Completion</th>
+                      <th>브랜드</th>
+                      <th>이름</th>
+                      <th>모델번호</th>
+                      <th>가격</th>
+                      <th>상품 상세페이지</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Unity Pugh</td>
-                      <td>9958</td>
-                      <td>Curicó</td>
-                      <td>2005/02/11</td>
-                      <td>37%</td>
-                    </tr>
-                    <tr>
-                      <td>Theodore Duran</td>
-                      <td>8971</td>
-                      <td>Dhanbad</td>
-                      <td>1999/04/07</td>
-                      <td>97%</td>
-                    </tr>
-
+                    {% for product in products %}
+                      <tr id="productDetail">
+                        <td>{{product.brand}}</td>
+                        <td>
+                          <a href="{% url "kream:detail" product.id year %}">{{product.name_kor}}</a>
+                        </td>
+                        <td>{{product.model_no}}</td>
+                        <td>{{product.original_price}}원</td>
+                        <td>
+                          <a href="{{product.product_detail_url}}">{{product.product_detail_url}}</a>
+                        </td>
+                      </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>
