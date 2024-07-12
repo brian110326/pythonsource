@@ -24,8 +24,7 @@
                     <div class="overline text-muted mb-4"></div>
                     <h1>안녕하세요
                       {{user.username}}님
-                    </h1>
-                    
+                    </h1> 
                     <p class="card-text mb-4">거래된 데이터의 매출액 정보입니다</p>
                     <table class="table table-sm mb-0">
                       <tbody>
@@ -35,39 +34,33 @@
                             <div class="text-success fw-500" id="total">{{total_sales}}</div>
                           </td>
                         </tr>
-
                         <tr class="py-2">
                           <td class="h6">지난해 대비 매출액 증감비율</td>
                           <td class="h6">
                             <div class="text-success fw-500" id="input"></div>
                           </td>
                         </tr>
-
                         <tr class="py-2">
                           <td class="h6">{{latest_month}}월 매출 비교: 2024년 vs 2023년</td>
                           <td class="h6">
                             <div class="text-success fw-500" id="input2"></div>
                           </td>
-                        </tr>
-                        
+                        </tr>                  
                         <tr class="py-2">
                           <td class="h6" id="input3_">{{curr_quarter}}</td>
                           <td class="h6">
                             <div class="text-success fw-500" id="input3">{{curr_quarter_total_sales_data}}</div>
                           </td>
                         </tr>
-
                         <tr class="py-2">
                           <td class="h6">이전 분기 매출액 비교</td>
                           <td class="h6">
                             <div class="text-success fw-500" id="input4">{{sales_percentage_change}}</div>
                           </td>
                         </tr>
-
                       </tbody>
                     </table>
-                  </div>
-                  
+                  </div>               
                 </div>
               </div>
               <div class="col-lg-7 col-md-6 mb-5">
@@ -93,8 +86,7 @@
             <div class="row gx-5">
               <div class="col-md-6 mb-5">
                 <div class="card card-raised border-top border-4 border-secondary h-100">
-                  <div class="card-body p-5">
-                    
+                  <div class="card-body p-5">            
                     <h5 class="mb-4">가장 많이 팔린 시간대 TOP 10</h5>
                     {% comment %} 반복 영역 {% endcomment %}
                     {% for data in top_time %}
@@ -108,8 +100,7 @@
                         </div>
                       </div>
                     {% endfor %}
-                  </div>
-                  
+                  </div>       
                 </div>
               </div>
               <div class="col-md-6 mb-5">
@@ -141,8 +132,7 @@
             </div>
           </div>
         </main>
-        <!-- Footer-->
-        <!-- Min-height is set inline to match the height of the drawer footer-->
+        
         {% include "footer.html" %}
       </div>
     </div>

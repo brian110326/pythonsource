@@ -31,8 +31,7 @@
               </div>
             </div>
           </header>
-          <div class="container-xl p-5">
-            
+          <div class="container-xl p-5">    
             <div class="row">
               <form action="" method="post">
                 {% csrf_token %}
@@ -44,7 +43,6 @@
                   <label for="content" class="form-label">내용</label>
                   <textarea class="form-control" id="content" rows="9" name="content"></textarea>
                 </div>
-
                 <div class="d-flex justify-content-end">
                   <input type="submit" value="등록" class="btn btn-primary ms-2"/>
                   <a href="{% url "kream:checkList" %}" class="btn btn-success ms-2">목록</a>
@@ -53,8 +51,7 @@
             </div>     
           </div>
         </main>
-        <!-- Footer-->
-        <!-- Min-height is set inline to match the height of the drawer footer-->
+        
         {% include "footer.html" %}
       </div>
     </div>

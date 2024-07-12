@@ -16,12 +16,9 @@
       <div id="layoutDrawer_content">
         <!-- Main page content-->
         <main>
-
           <div class="container-xl p-5">
-
             <div class="d-flex justify-content-between align-items-end">
               <h2 class="display-6 mb-0">월간 리포트</h2>
-
             </div>
             <hr class="mt-2 mb-5"/>
             <div class="row gx-5">
@@ -40,8 +37,7 @@
                             <td class="px-4 py-2 border-bottom-0">월</td>
                             <td class="px-4 py-2 border-bottom-0 text-end">상세리포트 주소</td>
                           </thead>
-
-                          
+                         
                           {% comment %} 반복영역 {% endcomment %}
                           {% for date in dates %}
                             <tr>
@@ -70,8 +66,7 @@
                     {% if dates.has_next %}
                       <a class="btn btn-primary text-uppercase" href="?page={{dates.next_page_number}}"> 다음 →</a>
                     {% endif %}
-                  </div>
-                  
+                  </div>               
                 </div>
               </div>
               <!-- Checklist column-->
@@ -110,8 +105,7 @@
             </div>
           </div>
         </main>
-        <!-- Footer-->
-        <!-- Min-height is set inline to match the height of the drawer footer-->
+      
         {% include "footer.html" %}
       </div>
     </div>

@@ -26,7 +26,6 @@
               </div>
               <div class="col-12 col-md-auto">
                 <div class="d-flex flex-column flex-sm-row gap-3">
-
                   <select class="form-select" aria-label="Default select example" id="select" label="년도선택">
                     {% for o in options %}
                       <option id="option" value="{{o.trade_year}}-{{o.trade_month}}" {% if o.trade_year == year and o.trade_month == month %} selected="selected" {% endif %}>
@@ -35,11 +34,9 @@
                       </option>
                     {% endfor %}
                   </select>
-
                 </div>
               </div>
-            </div>
-            
+            </div>   
             <div class="row gx-5">
               <div class="col-xxl-3 col-md-6 mb-5">
                 <div class="card card-raised border-start border-primary border-4 w-78">
@@ -78,7 +75,6 @@
                         <div class="col-12 col-xxl-2">
                           <div class="d-flex flex-column flex-md-row flex-xxl-column align-items-center align-items-xl-start justify-content-between">
                             <div class="mb-4 text-center text-md-start">
-
                               <div class="text-xs mb-1">{{month}}월 총매출액</div>
                               <div class="display-6 fw-500" id="total_sales_data">{{total_sales_data}}</div>
                             </div>
@@ -105,11 +101,9 @@
                     <div class="card-header bg-transparent px-4">
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="me-4">
-
                           <h2 class="card-title mb-0">{{month}}월 시간대별 매출액</h2>
                           <div class="card-subtitle"></div>
                         </div>
-
                       </div>
                     </div>
                     <div class="card-body p-4">
@@ -119,7 +113,6 @@
                         </div>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -168,7 +161,6 @@
                       {{month}}월 거래내역 상품 목록</h2>
                     <div class="card-subtitle"></div>
                   </div>
-
                 </div>
               </div>
               <div class="card-body p-4">
@@ -203,8 +195,7 @@
             </div>
           </div>
         </main>
-        <!-- Footer-->
-        <!-- Min-height is set inline to match the height of the drawer footer-->
+        
         {% include "footer.html" %}
       </div>
     </div>
