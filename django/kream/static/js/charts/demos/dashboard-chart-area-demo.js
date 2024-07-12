@@ -1,136 +1,148 @@
-// Demo Area Chart
-//
-// The style configurations in this demo are
-// intended to match the Material Design styling.
-// Use this demo chart as a starting point and for
-// reference when creating charts within an app.
-//
-// Chart.js v3 is being used, which is currently
-// in beta. For the v3 docs, visit
-// https://www.chartjs.org/docs/master/
+const size = document.querySelector("#size");
+size_array = size.getAttribute("data-size");
+sizeListStr = size_array.replace(/'/g, '"');
+size_list = JSON.parse(sizeListStr);
 
-var ctx = document.getElementById('dashboardAreaChart').getContext('2d');
+sales_array = size.getAttribute("data-sales");
+sales_list = JSON.parse(sales_array);
+
+var ctx = document.getElementById("dashboardAreaChart").getContext("2d");
 var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [
-            {
-                fill: {
-                    target: 'origin',
-                    above: primaryColorOpacity10,
-                },
-                borderColor: primaryColor,
-                label: 'Sessions',
-                tension: 0.3, // setting tension to 0 disables bezier curves, using a value from 0 to 1 will change the curvature of the line
-                pointBackgroundColor: primaryColor,
-                pointBorderWidth: 0,
-                pointHitRadius: 50,
-                pointHoverBackgroundColor: primaryColor,
-                pointHoverRadius: 5,
-                pointRadius: 0,
-                data: [9481, 15684, 13495, 25198, 15498, 18654, 32519],
-            },
-        ],
-    },
-    options: {
-        scales: {
-            x: {
-                time: {
-                    unit: 'date',
-                },
-                gridLines: {
-                    display: false,
-                },
-                ticks: {
-                    maxTicksLimit: 7,
-                },
-            },
-            y: {
-                min: 0,
-                max: 40000,
-                ticks: {
-                    maxTicksLimit: 5,
-                },
-                gridLines: {
-                    color: 'rgba(0, 0, 0, .075)',
-                },
-            },
+  type: "line",
+  data: {
+    labels: size_list,
+    datasets: [
+      {
+        fill: {
+          target: "origin",
+          above: primaryColorOpacity10,
         },
-        plugins: {
-            legend: {
-                display: false,
-            },
+        borderColor: primaryColor,
+        label: "Sessions",
+        tension: 0.3, // setting tension to 0 disables bezier curves, using a value from 0 to 1 will change the curvature of the line
+        pointBackgroundColor: primaryColor,
+        pointBorderWidth: 0,
+        pointHitRadius: 50,
+        pointHoverBackgroundColor: primaryColor,
+        pointHoverRadius: 5,
+        pointRadius: 0,
+        data: sales_list,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      x: {
+        time: {
+          unit: "date",
         },
+        gridLines: {
+          display: false,
+        },
+        ticks: {
+          maxTicksLimit: 7,
+        },
+      },
+      y: {
+        ticks: {
+          maxTicksLimit: 5,
+        },
+        gridLines: {
+          color: "rgba(0, 0, 0, .075)",
+        },
+      },
     },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  },
 });
 
-let currentLineChart = 'USERS';
-const setMyLineChart = (whichChart, keepRotating = false) => {
-    autoRotate = keepRotating;
-    switch (whichChart) {
-        case 'USERS':
-            if (currentLineChart === 'USERS') {
-                return;
-            }
-            myLineChart.data.datasets[0].data = [9481, 15684, 13495, 25198, 15498, 18654, 32519];
-            myLineChart.data.datasets[0].fill.above = primaryColorOpacity10;
-            myLineChart.data.datasets[0].borderColor = primaryColor;
-            myLineChart.data.datasets[0].pointBackgroundColor = primaryColor;
-            myLineChart.data.datasets[0].pointHoverBackgroundColor = primaryColor;
-            myLineChart.update();
-            currentLineChart = 'USERS';
-            break;
-        case 'SESSIONS':
-            if (currentLineChart === 'SESSIONS') {
-                return;
-            }
-            myLineChart.data.datasets[0].data = [2634, 9575, 7891, 20299, 9200, 36636, 39113];
-            myLineChart.data.datasets[0].fill.above = secondaryColorOpacity10;
-            myLineChart.data.datasets[0].borderColor = secondaryColor;
-            myLineChart.data.datasets[0].pointBackgroundColor = secondaryColor;
-            myLineChart.data.datasets[0].pointHoverBackgroundColor = secondaryColor;
-            myLineChart.update();
-            currentLineChart = 'SESSIONS';
-            break;
-        case 'CONVERSIONS':
-            if (currentLineChart === 'CONVERSIONS') {
-                return;
-            }
-            myLineChart.data.datasets[0].data = [30000, 20000, 25000, 15000, 20000, 10000, 15000];
-            myLineChart.data.datasets[0].fill.above = infoColorOpacity10;
-            myLineChart.data.datasets[0].borderColor = infoColor;
-            myLineChart.data.datasets[0].pointBackgroundColor = infoColor;
-            myLineChart.data.datasets[0].pointHoverBackgroundColor = infoColor;
-            myLineChart.update();
-            currentLineChart = 'CONVERSIONS';
-            break;
+const box = document.querySelector("#box");
+max_array = box.getAttribute("data-max");
+max_list = JSON.parse(max_array);
 
-        default:
-            break;
-    }
+min_array = box.getAttribute("data-min");
+min_list = JSON.parse(min_array);
+
+// 1사분면 값
+q1_Str = box.getAttribute("data-first");
+q1_array = q1_Str.replace(/'/g, '"');
+q1_ = JSON.parse(q1_array);
+
+q1_list = [];
+
+for (var key in q1_) {
+  if (q1_.hasOwnProperty(key)) {
+    q1_list.push(q1_[key]);
+  }
+}
+
+// 3사분면 값
+q3_Str = box.getAttribute("data-third");
+q3_array = q3_Str.replace(/'/g, '"');
+q3_ = JSON.parse(q3_array);
+
+q3_list = [];
+
+for (var key in q3_) {
+  if (q3_.hasOwnProperty(key)) {
+    q3_list.push(q3_[key]);
+  }
+}
+
+// 중앙값
+median_Str = box.getAttribute("data-median");
+median_array = median_Str.replace(/'/g, '"');
+median_ = JSON.parse(median_array);
+
+median_list = [];
+
+for (var key in median_) {
+  if (median_.hasOwnProperty(key)) {
+    median_list.push(median_[key]);
+  }
+}
+
+const data = size_list.map((size, index) => ({
+  min: min_list[index],
+  max: max_list[index],
+  q1: q1_list[index],
+  q3: q3_list[index],
+  median: median_list[index],
+}));
+
+const boxplotData = {
+  labels: size_list,
+  datasets: [
+    {
+      label: "사이즈별 BoxPlot",
+      backgroundColor: "rgba(255,0,0,0.5)",
+      borderColor: "red",
+      borderWidth: 1,
+      outlierColor: "#999999",
+      padding: 10,
+      itemRadius: 0,
+      data: data,
+    },
+  ],
 };
-
-// Rotate the tabs for the demo
-let autoRotate = true;
-
-const autoTabCharts = ['USERS', 'SESSIONS', 'CONVERSIONS'];
-let chartIndex = 1;
-
-const rotateTabs = () => {
-    setTimeout(() => {
-        if (!autoRotate) {
-            return;
-        }
-        // Disable rotate if tab-bar is out of viewport
-        if (myLineChart.canvas.getBoundingClientRect().top < 97) {
-            return rotateTabs();
-        }
-        document.body.querySelector('mwc-tab-bar').activeIndex = chartIndex;
-        setMyLineChart(autoTabCharts[chartIndex], true);
-        chartIndex = (chartIndex + 1) % 3;
-        rotateTabs();
-    }, 3000);
+window.onload = () => {
+  const ctx2 = document.getElementById("boxWhiskerChart").getContext("2d");
+  window.myBar = new Chart(ctx2, {
+    type: "boxplot",
+    data: boxplotData,
+    options: {
+      responsive: true,
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Box Plot Chart",
+      },
+    },
+  });
 };
-
-rotateTabs();

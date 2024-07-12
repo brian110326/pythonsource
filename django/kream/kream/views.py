@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total, Check_List
-from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg
+from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg, Min
 import pandas as pd
-
-
+import numpy as np
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import base64
@@ -715,5 +714,93 @@ def monthlyReport(request, year, month):
             "time_list": time_list,
             "sales_list": sales_list,
             "products": p,
+        },
+    )
+
+
+@login_required(login_url="common:login")
+def sizeReport(requesst, pid):
+    # 상품 이름
+    product = get_object_or_404(Product, id=pid)
+
+    # 사이즈별 평균 거래가(맨위 차트용)
+    avg_sales_per_size = (
+        Trade_Total.objects.values("product", "trade_size")
+        .annotate(avg_sales=Avg("trade_price"))
+        .order_by("trade_size")
+    )
+
+    size_list = [
+        data["trade_size"] for data in avg_sales_per_size if data["product"] == pid
+    ]
+
+    sales_list = [
+        data["avg_sales"] for data in avg_sales_per_size if data["product"] == pid
+    ]
+
+    # boxplot chart용
+    # 넘겨주는 것들 : size_list, 최대값, 최소값, 1사분위값, 3사분위값, 중앙값
+    max_sales = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_size")
+        .annotate(max_sales=Max("trade_price"))
+    )
+    max_sales_data = [data["max_sales"] for data in max_sales]
+
+    min_sales = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_size")
+        .annotate(min_sales=Min("trade_price"))
+    )
+    min_sales_data = [data["min_sales"] for data in min_sales]
+
+    # 1사분위 : 데이터 오름차순 정렬 후 25%의 값
+    # ex) 270사이즈의 매출 정렬
+    sales_data = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("trade_size", "trade_price")
+        .order_by("trade_size", "trade_price")
+    )
+
+    # trade_price 값을 정수로 변환
+    for item in sales_data:
+        item["trade_price"] = int(item["trade_price"])
+
+    # 각 사이즈별로 그룹화
+    # ex) 270 : 130000
+    grouped_data = {}
+    for item in sales_data:
+        size = item["trade_size"]
+        if size not in grouped_data:
+            grouped_data[size] = []
+        grouped_data[size].append(item["trade_price"])
+
+    # 각 사이즈별 q1 값 계산
+    q1_values = {}
+    for size, prices in grouped_data.items():
+        q1_values[size] = np.percentile(prices, 25)
+
+    q3_values = {}
+    for size, prices in grouped_data.items():
+        q3_values[size] = np.percentile(prices, 75)
+
+    median_values = {}
+    for size, prices in grouped_data.items():
+        median_values[size] = np.percentile(prices, 50)
+
+    return render(
+        requesst,
+        "kream/sizeReport.html",
+        {
+            "pid": pid,
+            "product": product,
+            "avg_sales_per_size": avg_sales_per_size,
+            "size_list": size_list,
+            "sales_list": sales_list,
+            "q1": q1_values,
+            "q3": q3_values,
+            "median": median_values,
+            "max_sales_data": max_sales_data,
+            "min_sales_data": min_sales_data,
         },
     )

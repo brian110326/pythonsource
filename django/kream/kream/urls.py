@@ -15,4 +15,5 @@ urlpatterns = [
     path("checkListDetail/modify/<int:cid>/", views.modify, name="modify"),
     path("checkListDetail/delete/<int:cid>/", views.delete, name="delete"),
     path("checkListCreate/", views.create, name="create"),
+    path("sizeReport/<int:pid>/", views.sizeReport, name="sizeReport"),
 ]
