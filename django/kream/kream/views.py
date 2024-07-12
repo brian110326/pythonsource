@@ -795,7 +795,16 @@ def sizeReport(requesst, pid):
         .annotate(mean_sales=Avg("trade_price"))
         .order_by("trade_size")
     )
+
     sales_mean_data = [data["mean_sales"] for data in sales_mean]
+
+    # 거래된 사이즈 수
+    size_count = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_size")
+        .distinct()
+        .annotate(size_count=Count("trade_size"))
+    ).order_by("-size_count")
 
     return render(
         requesst,
@@ -812,5 +821,6 @@ def sizeReport(requesst, pid):
             "max_sales_data": max_sales_data,
             "min_sales_data": min_sales_data,
             "sales_mean_data": sales_mean_data,
+            "size_count": size_count[:5],
         },
     )

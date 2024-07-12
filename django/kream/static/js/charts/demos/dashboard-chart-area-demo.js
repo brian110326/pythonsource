@@ -18,7 +18,7 @@ var myLineChart = new Chart(ctx, {
           above: primaryColorOpacity10,
         },
         borderColor: primaryColor,
-        label: "Sessions",
+        label: "사이즈별 평균매출액",
         tension: 0.3, // setting tension to 0 disables bezier curves, using a value from 0 to 1 will change the curvature of the line
         pointBackgroundColor: primaryColor,
         pointBorderWidth: 0,
@@ -33,15 +33,10 @@ var myLineChart = new Chart(ctx, {
   options: {
     scales: {
       x: {
-        time: {
-          unit: "date",
-        },
         gridLines: {
           display: false,
         },
-        ticks: {
-          maxTicksLimit: 7,
-        },
+        ticks: {},
       },
       y: {
         ticks: {
@@ -54,7 +49,7 @@ var myLineChart = new Chart(ctx, {
     },
     plugins: {
       legend: {
-        display: false,
+        display: true,
       },
     },
   },
@@ -150,3 +145,13 @@ window.onload = () => {
     },
   });
 };
+
+const counts = document.querySelectorAll("#count");
+
+counts.forEach((count) => {
+  const count_ = parseInt(count.innerHTML);
+
+  const count_ko = count_.toLocaleString("ko-KR");
+
+  count.innerHTML = count_ko + "개";
+});

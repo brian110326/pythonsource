@@ -53,93 +53,28 @@
                     <div class="card-body pt-4">
                       <canvas id="dashboardAreaChart" width="100%" height="40"></canvas>
                     </div>
-                    <div class="card-footer bg-transparent p-0">
-                      <div class="list-group list-group-flush">
-                        <div class="list-group-item ripple-gray">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <div class="me-3">Revenue Target</div>
-                            <div class="d-flex align-items-center">
-                              <div class="me-2">25%</div>
-                              <div class="progress me-2" style="width: 8rem; height: 0.25rem">
-                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <div class="d-flex align-items-center p-2 text-primary">
-                                <div class="fst-button">Open Report</div>
-                                <i class="material-icons icon-sm ms-1">chevron_right</i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="list-group-item ripple-gray">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <div class="me-3">Acquisition Goal</div>
-                            <div class="d-flex align-items-center">
-                              <div class="me-2">100%</div>
-                              <div class="progress me-2" style="width: 8rem; height: 0.25rem">
-                                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <div class="d-flex align-items-center p-2 text-primary">
-                                <div class="fst-button">Open Report</div>
-                                <i class="material-icons icon-sm ms-1">chevron_right</i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                   
                   </div>
                 </div>
                 <div class="col-lg-4 mb-5">
                   <div class="card card-raised bg-primary h-100">
                     <div class="card-body">
-                      <h2 class="overline text-white">Content Summary</h2>
-                      <div class="list-group list-group-flush list-group-light">
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          <div class="caption font-monospace text-white-50">Top Pages</div>
-                          <div class="caption font-monospace text-white-50 ms-2">Visitors</div>
+                      <h2 class="overline text-white">사이즈별 거래내역 수 TOP5</h2>
+                      <div class="list-group list-group-flush list-group-light"> 
+                        <div class="list-group-item d-flex justify-content-between px-0">                         
+                          <div class="ms-2"></div>
                         </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /
-                          <div class="ms-2">12,842</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /themes
-                          <div class="ms-2">5,549</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /previews
-                          <div class="ms-2">3,923</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /campaign
-                          <div class="ms-2">2,993</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /contact
-                          <div class="ms-2">1,832</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /support
-                          <div class="ms-2">915</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /status
-                          <div class="ms-2">513</div>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between px-0">
-                          /setup
-                          <div class="ms-2">452</div>
-                        </div>
+
+                        {% comment %} 반복영역 {% endcomment %}
+                        {% for item in size_count %}
+                          <div class="list-group-item d-flex justify-content-between px-0">
+                            {{item.trade_size}}
+                            <div class="ms-2" id="count">{{item.size_count}}</div>
+                          </div>
+                        {% endfor %}
                       </div>
                     </div>
-                    <div class="card-footer p-0">
-                      <div class="d-flex justify-content-end ripple-white px-3 py-2">
-                        <div class="d-flex align-items-center p-2 text-white">
-                          <div class="fst-button">Advanced report</div>
-                          <i class="material-icons icon-sm ms-1">chevron_right</i>
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
