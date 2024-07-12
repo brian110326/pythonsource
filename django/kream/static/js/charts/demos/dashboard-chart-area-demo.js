@@ -8,7 +8,7 @@ sales_list = JSON.parse(sales_array);
 
 var ctx = document.getElementById("dashboardAreaChart").getContext("2d");
 var myLineChart = new Chart(ctx, {
-  type: "line",
+  type: "bar",
   data: {
     labels: size_list,
     datasets: [
@@ -27,6 +27,8 @@ var myLineChart = new Chart(ctx, {
         pointHoverRadius: 5,
         pointRadius: 0,
         data: sales_list,
+        backgroundColor: primaryColorOpacity50,
+        borderColor: primaryColorOpacity50,
       },
     ],
   },
@@ -43,7 +45,7 @@ var myLineChart = new Chart(ctx, {
           maxTicksLimit: 5,
         },
         gridLines: {
-          color: "rgba(0, 0, 0, .075)",
+          color: "rgba(245, 0, 0, .075)",
         },
       },
     },
