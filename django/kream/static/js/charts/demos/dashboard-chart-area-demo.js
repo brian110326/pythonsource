@@ -118,7 +118,7 @@ const boxplotData = {
   labels: size_list,
   datasets: [
     {
-      label: "사이즈별 BoxPlot",
+      label: "사이즈",
       backgroundColor: "rgba(255,0,0,0.5)",
       borderColor: "red",
       borderWidth: 1,
