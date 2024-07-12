@@ -739,7 +739,7 @@ def sizeReport(requesst, pid):
     ]
 
     # boxplot chart용
-    # 넘겨주는 것들 : size_list, 최대값, 최소값, 1사분위값, 3사분위값, 중앙값
+    # 넘겨주는 것들 : size_list, 최대값, 최소값, 1사분위값, 3사분위값, 중앙값, 평균값
     max_sales = (
         Trade_Total.objects.filter(product_id=pid)
         .values("product", "trade_size")
@@ -788,6 +788,15 @@ def sizeReport(requesst, pid):
     for size, prices in grouped_data.items():
         median_values[size] = np.percentile(prices, 50)
 
+    # 평균값
+    sales_mean = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_size")
+        .annotate(mean_sales=Avg("trade_price"))
+        .order_by("trade_size")
+    )
+    sales_mean_data = [data["mean_sales"] for data in sales_mean]
+
     return render(
         requesst,
         "kream/sizeReport.html",
@@ -802,5 +811,6 @@ def sizeReport(requesst, pid):
             "median": median_values,
             "max_sales_data": max_sales_data,
             "min_sales_data": min_sales_data,
+            "sales_mean_data": sales_mean_data,
         },
     )

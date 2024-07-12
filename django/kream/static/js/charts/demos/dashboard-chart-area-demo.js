@@ -67,6 +67,9 @@ max_list = JSON.parse(max_array);
 min_array = box.getAttribute("data-min");
 min_list = JSON.parse(min_array);
 
+mean_array = box.getAttribute("data-mean");
+mean_list = JSON.parse(mean_array);
+
 // 1사분면 값
 q1_Str = box.getAttribute("data-first");
 q1_array = q1_Str.replace(/'/g, '"');
@@ -109,6 +112,7 @@ for (var key in median_) {
 const data = size_list.map((size, index) => ({
   min: min_list[index],
   max: max_list[index],
+  mean: mean_list[index],
   q1: q1_list[index],
   q3: q3_list[index],
   median: median_list[index],
