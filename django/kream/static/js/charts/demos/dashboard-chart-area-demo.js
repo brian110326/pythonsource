@@ -128,6 +128,7 @@ const boxplotData = {
     },
   ],
 };
+
 window.onload = () => {
   const ctx2 = document.getElementById("boxWhiskerChart").getContext("2d");
   window.myBar = new Chart(ctx2, {
