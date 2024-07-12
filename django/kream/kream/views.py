@@ -2,21 +2,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Product, Trade_Total, Check_List
 from django.db.models import Sum, Case, When, IntegerField, Count, Max, Avg, Min
-import pandas as pd
-import numpy as np
+from collections import Counter
+from io import BytesIO
+from django.core.paginator import Paginator
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import base64
-from collections import Counter
-from io import BytesIO
-
-from django.core.paginator import Paginator
-
+import pandas as pd
+import numpy as np
 import matplotlib
 
 matplotlib.use("Agg")
-
-# import koreanize_matplotlib
 
 
 # Create your views here.
