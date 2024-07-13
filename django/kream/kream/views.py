@@ -906,5 +906,5 @@ def predictSales(request, pid):
     return render(
         request,
         "kream/predictSales.html",
-        {"prediction": prediction, "product": product},
+        {"prediction": prediction, "product": product, "pid": pid},
     )
