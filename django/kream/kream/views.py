@@ -11,6 +11,7 @@ import base64
 import pandas as pd
 import numpy as np
 import matplotlib
+from sklearn.linear_model import LinearRegression
 
 matplotlib.use("Agg")
 
@@ -715,7 +716,7 @@ def monthlyReport(request, year, month):
 
 
 @login_required(login_url="common:login")
-def sizeReport(requesst, pid):
+def sizeReport(request, pid):
     # 상품 이름
     product = get_object_or_404(Product, id=pid)
 
@@ -803,7 +804,7 @@ def sizeReport(requesst, pid):
     ).order_by("-size_count")
 
     return render(
-        requesst,
+        request,
         "kream/sizeReport.html",
         {
             "pid": pid,
@@ -819,4 +820,91 @@ def sizeReport(requesst, pid):
             "sales_mean_data": sales_mean_data,
             "size_count": size_count[:5],
         },
+    )
+
+
+def predict_multiple_months(df, start_year, start_month, months_ahead):
+    # 그룹화하여 총 매출액을 계산
+    df_trade = (
+        df.groupby(["Name_Kor", "Trade_Year", "Trade_Month"])["Trade_Prices"]
+        .sum()
+        .reset_index()
+    )
+
+    # 문자열로 변환 후 공백 제거 및 다시 정수로 변환
+    df_trade["Trade_Prices"] = (
+        df_trade["Trade_Prices"].astype("str").str.strip().astype(int)
+    )
+
+    # 연도와 월을 합쳐 year_month 컬럼 생성
+    df_trade["year_month"] = df_trade["Trade_Year"] * 12 + df_trade["Trade_Month"]
+
+    # X와 y 설정
+    X = df_trade[["year_month"]].values
+    y = df_trade["Trade_Prices"].values
+
+    # 선형 회귀 모델 학습
+    reg = LinearRegression()
+    reg.fit(X, y)
+
+    # 예측할 여러 달의 year_month 계산
+    predictions = []
+    for i in range(months_ahead):
+        target_year = start_year + (start_month + i - 1) // 12
+        target_month = (start_month + i - 1) % 12 + 1
+        target_year_month = target_year * 12 + target_month
+        target_X = np.array([[target_year_month]])
+
+        # 예측 수행
+        prediction = reg.predict(target_X)[0]
+        predictions.append(
+            {"year": target_year, "month": target_month, "prediction": prediction}
+        )
+
+    return predictions
+
+
+@login_required(login_url="common:login")
+def predictSales(request, pid):
+
+    # 예측모델
+    ready_data = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_year", "trade_month")
+        .annotate(total_sales=Sum("trade_price"))
+        .order_by("trade_year", "trade_month")
+    )
+    data = {
+        "Name_Kor": [data["product"] for data in ready_data],
+        "Trade_Year": [data["trade_year"] for data in ready_data],
+        "Trade_Month": [data["trade_month"] for data in ready_data],
+        "Trade_Prices": [data["total_sales"] for data in ready_data],
+    }
+    df = pd.read_excel(
+        "C:\\source\\pythonsource\\kream_project\\clean_data\\trade.xlsx"
+    )
+
+    latest_trade = (
+        Trade_Total.objects.filter(product_id=pid)
+        .values("product", "trade_year", "trade_month")
+        .annotate(latest_year=Max("trade_year"), latest_month=Max("trade_month"))
+        .distinct()
+    ).order_by("-trade_year", "-trade_month")
+
+    latest_year = [data["latest_year"] for data in latest_trade]
+    latest_month = [data["latest_month"] for data in latest_trade]
+
+    if latest_year and latest_month:
+        latest_year = int(latest_year[0])
+        latest_month = int(latest_month[0]) + 1
+
+    prediction = predict_multiple_months(df, latest_year, latest_month, 6)
+
+    # 상품 이름
+    product = get_object_or_404(Product, id=pid)
+
+    return render(
+        request,
+        "kream/predictSales.html",
+        {"prediction": prediction, "product": product},
     )
