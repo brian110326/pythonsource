@@ -127,7 +127,7 @@ var myLineChart = new Chart(ctx, {
           above: gradient,
         },
         borderColor: "rgba(255, 255, 255, 1)",
-        label: "Sessions",
+        label: "매출액",
         tension: 0.3, // setting tension to 0 disables bezier curves, using a value from 0 to 1 will change the curvature of the line
         pointBackgroundColor: "rgba(255, 255, 255, 1)",
         pointBorderWidth: 0,
