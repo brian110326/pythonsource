@@ -13,9 +13,6 @@ import numpy as np
 import matplotlib
 from sklearn.linear_model import LinearRegression
 
-from sklearn.metrics.pairwise import linear_kernel
-from sklearn.feature_extraction.text import TfidfVectorizer
-import urllib.parse
 
 matplotlib.use("Agg")
 

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-import urllib.parse
+
 
 app_name = "kream"
 
